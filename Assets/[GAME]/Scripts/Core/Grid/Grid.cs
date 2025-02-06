@@ -12,6 +12,7 @@ namespace GarawellGames.Core
         public int Width;
         public int Height;
         public float CellSize;
+        public float ThresholdBetweenCells; // Need to recalculate after initialize
 
         public Grid(int w, int h, float cellSize = 1f)
         {
@@ -97,21 +98,6 @@ namespace GarawellGames.Core
             }
 
             return neighbours;
-        }
-
-        public Row AddNewRow()
-        {
-            int currentCount = RowList.Count;
-            Row newRow = new Row(currentCount);
-            RowList.Add(newRow);
-
-            for (int x = 0; x < Width; x++)
-            {
-                Cell newCell = new Cell(x, currentCount);
-                newRow.CellList.Add(newCell);
-            }
-
-            return newRow;
         }
 
         public Cell GetCellByItem(ItemBase item)
