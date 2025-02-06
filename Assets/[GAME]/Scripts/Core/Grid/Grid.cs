@@ -12,7 +12,6 @@ namespace GarawellGames.Core
         public int Width;
         public int Height;
         public float CellSize;
-        public float ThresholdBetweenCells; // Need to recalculate after initialize
 
         public Grid(int w, int h, float cellSize = 1f)
         {

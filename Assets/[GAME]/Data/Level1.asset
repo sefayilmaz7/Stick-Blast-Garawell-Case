@@ -12,6 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a43db42d5a688564dbe5437ac5eab315, type: 3}
   m_Name: Level1
   m_EditorClassIdentifier: 
-  cellItem: {fileID: 4164021621785232859, guid: be76a68029034144a97a42291470385c, type: 3}
-  width: 4
-  height: 5
+  CellItem: {fileID: 4164021621785232859, guid: be76a68029034144a97a42291470385c, type: 3}
+  Width: 4
+  Height: 5
+  TargetScore: 500
+  BlockColorForLevel: {r: 1, g: 0.50728744, b: 0, a: 1}
+  LevelBlocks:
+  - {fileID: 2562269119713133919, guid: 1eb5a0340eddfb642b6b38bdabac0c29, type: 3}
+  - {fileID: 9181907776487692621, guid: fd8ef8b21be637d4db1c54afffab4bbb, type: 3}
+  - {fileID: 7612757302554279355, guid: 327f13d6d0242a640a72355517c8f860, type: 3}

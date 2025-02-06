@@ -1,9 +1,11 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 namespace GarawellGames.Core
 {
+    [Serializable]
     public class Column
     {
         public List<Cell> CellList;

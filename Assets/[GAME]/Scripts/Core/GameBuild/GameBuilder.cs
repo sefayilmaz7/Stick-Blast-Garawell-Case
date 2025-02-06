@@ -6,7 +6,7 @@ using Grid = GarawellGames.Core.Grid;
 
 public class GameBuilder : Singleton<GameBuilder>
 {
-    private Grid _grid;
+    [SerializeField] private Grid _grid;
     private int _topPositionOfBoard;
 
     [Header("Data")] [Space(10)] 
@@ -21,7 +21,7 @@ public class GameBuilder : Singleton<GameBuilder>
     private void GenerateGrid()
     {
         // Update Data (from LevelManager) before getting values 
-        _grid = new Grid(gameBuildData.width, gameBuildData.height, 1);
+        _grid = new Grid(gameBuildData.Width, gameBuildData.Height, 1);
         _topPositionOfBoard = _grid.Height - 1;
     }
 
@@ -36,7 +36,7 @@ public class GameBuilder : Singleton<GameBuilder>
         {
             for (int x = 0; x < _grid.Width; x++)
             {
-                CellItem baseItem = Instantiate(levelData.cellItem, transform);
+                CellItem baseItem = Instantiate(levelData.CellItem, transform);
                 
                 Vector2 itemPosition = new Vector2(x * _grid.CellSize, (_topPositionOfBoard - y) * _grid.CellSize);
             
