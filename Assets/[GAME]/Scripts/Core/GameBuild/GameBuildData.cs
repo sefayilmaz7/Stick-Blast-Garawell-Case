@@ -9,7 +9,8 @@ public class GameBuildData : ScriptableObject
     public CellItem CellItem;
     public int Width;
     public int Height;
-    public float TargetScore;
+    public TargetItem.TargetType TargetType;
+    public int TargetAmount;
     public Color BlockColorForLevel;
     public BlockHelper[] LevelBlocks;
 }

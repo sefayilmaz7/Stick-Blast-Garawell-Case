@@ -40,7 +40,7 @@ public class GameBuilder : Singleton<GameBuilder>
                 
                 Vector2 itemPosition = new Vector2(x * _grid.CellSize, (_topPositionOfBoard - y) * _grid.CellSize);
             
-                baseItem.Initialize(new int[] { x, y }, itemPosition, transform, _grid.GetCellByCoordinates(x,y));
+                baseItem.Initialize(new int[] { x, y }, itemPosition, transform, _grid.GetCellByCoordinates(x,y), TargetItem.TargetType.Score);
             } 
         }
     }
