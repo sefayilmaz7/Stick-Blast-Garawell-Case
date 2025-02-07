@@ -6,7 +6,7 @@ using UnityEngine;
 public class CellItem : ItemBase
 {
     public bool IsFilled = false;
-    [SerializeField] private List<CellItemCorner> itemCorners = new List<CellItemCorner>();
+    [SerializeField] private List<CellItemEdge> itemCorners = new List<CellItemEdge>();
 
     public void FillItem(Color color)
     {

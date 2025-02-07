@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8795545676212518959}
   m_Layer: 0
-  m_Name: Lines
+  m_Name: Edges
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -45,6 +45,8 @@ GameObject:
   m_Component:
   - component: {fileID: 2094031978798138599}
   - component: {fileID: 3301832714011360430}
+  - component: {fileID: 6207123210726313464}
+  - component: {fileID: 5815011806089382857}
   m_Layer: 0
   m_Name: Line (2)
   m_TagString: Untagged
@@ -119,6 +121,67 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!61 &6207123210726313464
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1403236379357872794}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 0.65, y: 3.05}
+    newSize: {x: 0.65, y: 3.05}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 0.65, y: 3.05}
+  m_EdgeRadius: 0
+--- !u!114 &5815011806089382857
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1403236379357872794}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5d149a9ed3b183d48af74d853e2a24ef, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  edgeCollider: {fileID: 6207123210726313464}
+  edgeDefaultColor: {r: 0.427451, g: 0.34509805, b: 1, a: 1}
+  edgeSelectedColor: {r: 0.36862746, g: 1, b: 0, a: 1}
+  CellItem: {fileID: 4164021621785232859}
 --- !u!1 &1656396037386081648
 GameObject:
   m_ObjectHideFlags: 0
@@ -246,11 +309,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5699605061446917000}
-  - component: {fileID: 384509447303439575}
   - component: {fileID: 2042368059607165300}
   - component: {fileID: 5797387162905811245}
   m_Layer: 0
-  m_Name: ItemCorner (3)
+  m_Name: Square
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -271,22 +333,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 545196572002616249}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &384509447303439575
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3510096016057910287}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5d149a9ed3b183d48af74d853e2a24ef, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  cornerCollider: {fileID: 5797387162905811245}
-  cornerDefaultColor: {r: 0.2627451, g: 0.19607843, b: 0.7254902, a: 1}
-  cornerSelectedColor: {r: 0.4648342, g: 1, b: 0, a: 1}
-  CellItem: {fileID: 4164021621785232859}
 --- !u!212 &2042368059607165300
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -394,6 +440,8 @@ GameObject:
   m_Component:
   - component: {fileID: 4025280592905067059}
   - component: {fileID: 7943165261998292986}
+  - component: {fileID: 8173426552622631391}
+  - component: {fileID: 3073075786406743425}
   m_Layer: 0
   m_Name: Line
   m_TagString: Untagged
@@ -468,6 +516,67 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!61 &8173426552622631391
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4881651156252054864}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 0.65, y: 3.05}
+    newSize: {x: 0.65, y: 3.05}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 0.65, y: 3.05}
+  m_EdgeRadius: 0
+--- !u!114 &3073075786406743425
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4881651156252054864}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5d149a9ed3b183d48af74d853e2a24ef, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  edgeCollider: {fileID: 8173426552622631391}
+  edgeDefaultColor: {r: 0.42745098, g: 0.34509805, b: 1, a: 1}
+  edgeSelectedColor: {r: 0.36794555, g: 1, b: 0, a: 1}
+  CellItem: {fileID: 4164021621785232859}
 --- !u!1 &5437456370487710301
 GameObject:
   m_ObjectHideFlags: 0
@@ -478,6 +587,8 @@ GameObject:
   m_Component:
   - component: {fileID: 2613394539327017377}
   - component: {fileID: 5788626472958655862}
+  - component: {fileID: 5157635599407819996}
+  - component: {fileID: 6029467644468325329}
   m_Layer: 0
   m_Name: Line (1)
   m_TagString: Untagged
@@ -552,6 +663,67 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!61 &5157635599407819996
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5437456370487710301}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 0.65, y: 3.05}
+    newSize: {x: 0.65, y: 3.05}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 0.65, y: 3.05}
+  m_EdgeRadius: 0
+--- !u!114 &6029467644468325329
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5437456370487710301}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5d149a9ed3b183d48af74d853e2a24ef, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  edgeCollider: {fileID: 5157635599407819996}
+  edgeDefaultColor: {r: 0.427451, g: 0.34509805, b: 1, a: 1}
+  edgeSelectedColor: {r: 0.36862746, g: 1, b: 0, a: 1}
+  CellItem: {fileID: 4164021621785232859}
 --- !u!1 &6485854178791290282
 GameObject:
   m_ObjectHideFlags: 0
@@ -658,7 +830,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fillSprite: {fileID: 6373862180098320935}
-  lines: []
   visualParams:
     fillImageEnableTime: 0
     lineDefaultColor: {r: 0, g: 0, b: 0, a: 0}
@@ -683,10 +854,10 @@ MonoBehaviour:
   Y: 0
   IsFilled: 0
   itemCorners:
-  - {fileID: 6156879059949011886}
-  - {fileID: 6627697114234328227}
-  - {fileID: 8978350397586441978}
-  - {fileID: 384509447303439575}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
 --- !u!1 &6567773230647170152
 GameObject:
   m_ObjectHideFlags: 0
@@ -780,11 +951,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 650924984469549300}
-  - component: {fileID: 6156879059949011886}
   - component: {fileID: 2336863259742133353}
   - component: {fileID: 4447734033109938851}
   m_Layer: 0
-  m_Name: ItemCorner
+  m_Name: Square
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -805,22 +975,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 545196572002616249}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &6156879059949011886
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6950723386706789791}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5d149a9ed3b183d48af74d853e2a24ef, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  cornerCollider: {fileID: 4447734033109938851}
-  cornerDefaultColor: {r: 0.2627451, g: 0.19607843, b: 0.7254902, a: 1}
-  cornerSelectedColor: {r: 0.4648342, g: 1, b: 0, a: 1}
-  CellItem: {fileID: 4164021621785232859}
 --- !u!212 &2336863259742133353
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -927,11 +1081,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5017064775924234280}
-  - component: {fileID: 6627697114234328227}
   - component: {fileID: 5204791682231506082}
   - component: {fileID: 8960364897622653890}
   m_Layer: 0
-  m_Name: ItemCorner (1)
+  m_Name: Square
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -952,22 +1105,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 545196572002616249}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &6627697114234328227
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7743685618053178393}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5d149a9ed3b183d48af74d853e2a24ef, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  cornerCollider: {fileID: 8960364897622653890}
-  cornerDefaultColor: {r: 0.2627451, g: 0.19607843, b: 0.7254902, a: 1}
-  cornerSelectedColor: {r: 0.4648342, g: 1, b: 0, a: 1}
-  CellItem: {fileID: 4164021621785232859}
 --- !u!212 &5204791682231506082
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -1075,6 +1212,8 @@ GameObject:
   m_Component:
   - component: {fileID: 3779216157542563710}
   - component: {fileID: 2378121682661816896}
+  - component: {fileID: 6734981997027144554}
+  - component: {fileID: 1521199436666623226}
   m_Layer: 0
   m_Name: Line (3)
   m_TagString: Untagged
@@ -1149,6 +1288,67 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!61 &6734981997027144554
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7851836321250449293}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 0.65, y: 3.05}
+    newSize: {x: 0.65, y: 3.05}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 0.65, y: 3.05}
+  m_EdgeRadius: 0
+--- !u!114 &1521199436666623226
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7851836321250449293}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5d149a9ed3b183d48af74d853e2a24ef, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  edgeCollider: {fileID: 6734981997027144554}
+  edgeDefaultColor: {r: 0.427451, g: 0.34509805, b: 1, a: 1}
+  edgeSelectedColor: {r: 0.36862746, g: 1, b: 0, a: 1}
+  CellItem: {fileID: 4164021621785232859}
 --- !u!1 &7896172066156391356
 GameObject:
   m_ObjectHideFlags: 0
@@ -1158,11 +1358,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2312369047594017742}
-  - component: {fileID: 8978350397586441978}
   - component: {fileID: 2041798848876564523}
   - component: {fileID: 157394013680925932}
   m_Layer: 0
-  m_Name: ItemCorner (2)
+  m_Name: Square
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1183,22 +1382,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 545196572002616249}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &8978350397586441978
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7896172066156391356}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5d149a9ed3b183d48af74d853e2a24ef, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  cornerCollider: {fileID: 157394013680925932}
-  cornerDefaultColor: {r: 0.2627451, g: 0.19607843, b: 0.7254902, a: 1}
-  cornerSelectedColor: {r: 0.4648342, g: 1, b: 0, a: 1}
-  CellItem: {fileID: 4164021621785232859}
 --- !u!212 &2041798848876564523
 SpriteRenderer:
   m_ObjectHideFlags: 0
