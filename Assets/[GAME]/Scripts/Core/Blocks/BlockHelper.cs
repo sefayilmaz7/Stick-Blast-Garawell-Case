@@ -5,45 +5,63 @@ using UnityEngine.Serialization;
 
 public class BlockHelper : MonoBehaviour
 {
-    [SerializeField] private int[] possibleAngles; 
-    [SerializeField] private Collider2D[] blockColliders;
+    [SerializeField] private Collider2D blockCollider;
+    [SerializeField] private LayerMask cellItemLayerMask;
 
     public SpriteRenderer[] BlockSprites;
     public Vector2 PlacingOffset;
     public bool CanPlace;
     public CellItem ItemToPlace;
+    public Directions BlockDirections;
     
-    private void Update()
+    
+    
+    private void FixedUpdate()
     {
         CheckPlacement();
     }
 
     private void CheckPlacement()
     {
-        CanPlace = true;
-
-        foreach (var blockCollider in blockColliders)
+        CanPlace = false;
+        
+        Collider2D collider = Physics2D.OverlapBox(transform.position, new Vector2(0.7f,0.7f), 0, cellItemLayerMask);
+    
+        if (collider != null && collider.TryGetComponent(out CellItem cellItem))
         {
-            Collider2D[] colliders = Physics2D.OverlapBoxAll(blockCollider.transform.position, blockCollider.bounds.size *2, 0);
-
-            bool isValid = false;
-            foreach (var collider in colliders)
+            CanPlace = true;
+            if (ItemToPlace && cellItem != ItemToPlace)
             {
-                if (collider != null && collider.TryGetComponent(out CellItemEdge edge))
-                {
-                    isValid = true;
-                    ItemToPlace = edge.CellItem;
-                    break;
-                }
+                ItemToPlace.ResetEdges();
             }
-
-            if (!isValid)
+            ItemToPlace = cellItem;
+        }
+        else
+        {
+            if (ItemToPlace)
             {
-                ItemToPlace = null;
-                CanPlace = false;
-                return;
+                ItemToPlace.ResetEdges();
             }
+            ItemToPlace = null;
         }
     }
+    
+    private void OnDrawGizmos()
+    {
+        if (blockCollider == null)
+            return;
 
+        // Gizmo rengini belirle
+        Gizmos.color = Color.red;
+
+        // OverlapBox'ın boyutunu al
+        Vector2 size = new Vector2(0.7f,0.7f);
+
+        // Merkez noktasını belirle
+        Vector3 position = transform.position;
+
+        // Kutuyu çiz (Z rotasyonu olmadığı için sadece X ve Y kullanıyoruz)
+        Gizmos.DrawWireCube(position, size);
+    }
 }
+

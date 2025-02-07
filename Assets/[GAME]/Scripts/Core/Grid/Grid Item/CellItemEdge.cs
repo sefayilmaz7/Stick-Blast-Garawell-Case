@@ -5,24 +5,25 @@ using UnityEngine.Serialization;
 
 public class CellItemEdge : MonoBehaviour
 {
-    [SerializeField] private Collider2D edgeCollider;
     [SerializeField] private Color edgeDefaultColor; 
     [SerializeField] private Color edgeSelectedColor; 
     
     public CellItem CellItem;
+    public SpriteRenderer EdgeSprite;
 
-    public void SwitchEdgeCollider(bool enable)
+    /*public void SwitchEdgeCollider(bool enable)
     {
         edgeCollider.enabled = enable;
-    }
+    }*/
 
     public void Highlight()
     {
         GetComponent<SpriteRenderer>().color = edgeSelectedColor;
     }
 
-    public void ResetCorner()
+    public void ResetEdge()
     {
-        GetComponent<SpriteRenderer>().color = edgeSelectedColor; 
+        EdgeSprite.sortingOrder = 0;
+        GetComponent<SpriteRenderer>().color = edgeDefaultColor; 
     }
 }

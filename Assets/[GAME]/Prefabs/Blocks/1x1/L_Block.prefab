@@ -133,16 +133,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5fb8d2a12d477c8408359b3a7ff9a5eb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  possibleAngles: 5a000000b40000000e010000
-  blockColliders:
-  - {fileID: 8611960736168885875}
-  - {fileID: 1885626409955422612}
+  blockCollider: {fileID: 8611960736168885875}
+  cellItemLayerMask:
+    serializedVersion: 2
+    m_Bits: 64
   BlockSprites:
   - {fileID: 2577574049942846644}
   - {fileID: 189711393919708892}
   PlacingOffset: {x: 0, y: 0}
   CanPlace: 0
   ItemToPlace: {fileID: 0}
+  BlockDirections:
+    Up: 0
+    Down: 1
+    Right: 0
+    Left: 1
+    HasOnlyOneSide: 0
 --- !u!61 &8611960736168885875
 BoxCollider2D:
   m_ObjectHideFlags: 0
