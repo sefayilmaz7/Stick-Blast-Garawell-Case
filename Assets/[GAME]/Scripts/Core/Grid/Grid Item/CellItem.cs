@@ -4,11 +4,14 @@ using System.Collections.Generic;
 using DG.Tweening;
 using GarawellGames.Core;
 using UnityEngine;
+using UnityEngine.Events;
 using Grid = GarawellGames.Core.Grid;
 using Random = UnityEngine.Random;
 
 public class CellItem : ItemBase
 {
+    public static event UnityAction OnBlockProcessDone;
+
     public bool IsFilled = false;
     public Directions CellDirections;
     public CellItemEdge RightEdge;
@@ -23,8 +26,7 @@ public class CellItem : ItemBase
         _blocksInside.Add(controller);
     }
 
-    
-    private void DropBlocks()
+    public void DropBlocks()
     {
         foreach (var blockController in _blocksInside)
         {
@@ -33,6 +35,8 @@ public class CellItem : ItemBase
                 .DORotate(new Vector3(0, 0, Random.Range(0, 360)), 2.5f, RotateMode.FastBeyond360)
                 .OnComplete(() => Destroy(blockController));
         }
+
+        ClearItem();
     }
 
     public bool CheckFilled()
@@ -45,6 +49,11 @@ public class CellItem : ItemBase
         ResetSortOrders();
         IsFilled = true;
         itemVisual.FillCellItem(ColorManager.Instance.LevelColor);
+    }
+
+    public void UnFillItem()
+    {
+        itemVisual.VisualReset();
     }
 
     private void ResetSortOrders()
@@ -60,6 +69,9 @@ public class CellItem : ItemBase
         IsFilled = false;
         itemVisual.VisualReset();
         _blocksInside.Clear();
+        ResetEdges();
+        ResetDirections();
+        ClearNeighbours();
     }
 
     public void HighlightEdge(Directions blockDirections)
@@ -87,6 +99,14 @@ public class CellItem : ItemBase
             LeftEdge.EdgeSprite.sortingOrder = 1;
             LeftEdge.Highlight();
         }
+    }
+
+    private void ResetDirections()
+    {
+        CellDirections.Up = false;
+        CellDirections.Down = false;
+        CellDirections.Left = false;
+        CellDirections.Right = false;
     }
 
     public void ResetEdges()
@@ -156,6 +176,8 @@ public class CellItem : ItemBase
         {
             FillItem();
         }
+
+        DOVirtual.DelayedCall(0.3f, () => OnBlockProcessDone?.Invoke());
     }
 
     private void EffectNeighbours(Directions directions)
@@ -166,7 +188,16 @@ public class CellItem : ItemBase
         CheckLeftCell(directions);
     }
 
+    private void ClearNeighbours()
+    {
+        ClearDownCell();
+        ClearUpCell();
+        ClearRightCell();
+        ClearLeftCell();
+    }
+
     #region Neighbour Updates
+
     private void CheckLeftCell(Directions directions)
     {
         Grid grid = GameBuilder.Instance.GetGrid();
@@ -182,6 +213,16 @@ public class CellItem : ItemBase
                     if (leftItem.CheckFilled())
                     {
                         leftItem.FillItem();
+                    }
+                }
+            }
+            else
+            {
+                if (leftCell.GetItem() is CellItem leftItem)
+                {
+                    if (leftItem.CellDirections.Right)
+                    {
+                        CellDirections.Left = true;
                     }
                 }
             }
@@ -206,6 +247,16 @@ public class CellItem : ItemBase
                     }
                 }
             }
+            else
+            {
+                if (rightCell.GetItem() is CellItem rightItem)
+                {
+                    if (rightItem.CellDirections.Left)
+                    {
+                        CellDirections.Right = true;
+                    }
+                }
+            }
         }
     }
 
@@ -224,6 +275,16 @@ public class CellItem : ItemBase
                     if (downItem.CheckFilled())
                     {
                         downItem.FillItem();
+                    }
+                }
+            }
+            else
+            {
+                if (downCell.GetItem() is CellItem downItem)
+                {
+                    if (downItem.CellDirections.Up)
+                    {
+                        CellDirections.Down = true;
                     }
                 }
             }
@@ -248,10 +309,86 @@ public class CellItem : ItemBase
                     }
                 }
             }
+            else
+            {
+                if (upCell.GetItem() is CellItem upItem)
+                {
+                    if (upItem.CellDirections.Down)
+                    {
+                        CellDirections.Up = true;
+                    }
+                }
+            }
         }
     }
 
+    private void ClearUpCell()
+    {
+        Grid grid = GameBuilder.Instance.GetGrid();
+
+        Cell upCell = grid.GetCellByCoordinates(X, Y - 1);
+        if (upCell != null)
+        {
+            if (upCell.GetItem() is CellItem upItem)
+            {
+                upItem.CellDirections.Down = false;
+                upItem.DownEdge.ResetEdge();
+                upItem.UnFillItem();
+            }
+        }
+    }
+
+    private void ClearDownCell()
+    {
+        Grid grid = GameBuilder.Instance.GetGrid();
+
+        Cell downCell = grid.GetCellByCoordinates(X, Y + 1);
+        if (downCell != null)
+        {
+            if (downCell.GetItem() is CellItem downItem)
+            {
+                downItem.CellDirections.Up = false;
+                downItem.UpEdge.ResetEdge();
+                downItem.UnFillItem();
+            }
+        }
+    }
+
+    private void ClearRightCell()
+    {
+        Grid grid = GameBuilder.Instance.GetGrid();
+
+        Cell rightCell = grid.GetCellByCoordinates(X+ 1, Y);
+        if (rightCell != null)
+        {
+            if (rightCell.GetItem() is CellItem rightItem)
+            {
+                rightItem.CellDirections.Left = false;
+                rightItem.LeftEdge.ResetEdge();
+                rightItem.UnFillItem();
+            }
+        }
+    }
+
+    private void ClearLeftCell()
+    {
+        Grid grid = GameBuilder.Instance.GetGrid();
+
+        Cell leftCell = grid.GetCellByCoordinates(X+ 1, Y);
+        if (leftCell != null)
+        {
+            if (leftCell.GetItem() is CellItem leftItem)
+            {
+                leftItem.CellDirections.Right = false;
+                leftItem.RightEdge.ResetEdge();
+                leftItem.UnFillItem();
+            }
+        }
+    }
+    
+
     #endregion
+
     private void OnEnable()
     {
         BlockController.OnBlockPlaced += OnBlockTaken;

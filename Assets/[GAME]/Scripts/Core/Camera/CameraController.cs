@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using GarawellGames.Core;
 using UnityEngine;
 using Grid = GarawellGames.Core.Grid;
+using Random = UnityEngine.Random;
 
 public class CameraController : MonoBehaviour
 {
@@ -11,10 +12,34 @@ public class CameraController : MonoBehaviour
     [SerializeField] private float offset = 3;
     [SerializeField] private float yOffset;
 
-    private void ShakeCamera()
+    [Header("Camera Shake Values")] 
+    [SerializeField] private float shakeDuration;
+    [SerializeField] private float shakeMagnitude;
+    
+    public IEnumerator Shake()
     {
-        // Will Fill
+        Vector3 originalPosition = transform.localPosition;
+        float elapsed = 0f;
+
+        while (elapsed < shakeDuration)
+        {
+            float x = Random.Range(-1f, 1f) * shakeMagnitude;
+            float y = Random.Range(-1f, 1f) * shakeMagnitude;
+
+            transform.localPosition = originalPosition + new Vector3(x, y, 0f);
+
+            elapsed += Time.deltaTime;
+            yield return null;
+        }
+
+        transform.localPosition = originalPosition;
     }
+    
+    private void StartShake()
+    {
+        StartCoroutine(Shake());
+    }
+    
     private void SetCamera()
     {
         Grid grid = GameBuilder.Instance.GetGrid();
@@ -31,5 +56,15 @@ public class CameraController : MonoBehaviour
     private void Start()
     {
         SetCamera();
+    }
+
+    private void OnEnable()
+    {
+        BoardController.OnRowOrColumnCleared += StartShake;
+    }
+    
+    private void OnDisable()
+    {
+        BoardController.OnRowOrColumnCleared -= StartShake;
     }
 }

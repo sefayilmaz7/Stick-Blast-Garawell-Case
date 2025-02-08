@@ -22,5 +22,29 @@ namespace GarawellGames.Core
         {
             return CellList == null || CellList.Count <= 0;
         }
+        
+        public bool IsRowFilled()
+        {
+            foreach (var cell in CellList)
+            {
+                if (cell.GetItem() is CellItem cellItem && !cellItem.IsFilled)
+                {
+                    return false;
+                }
+            }
+
+            return true;
+        }
+        
+        public void ClearFilledRow()
+        {
+            foreach (var cell in CellList)
+            {
+                if (cell.GetItem() is CellItem cellItem)
+                {
+                    cellItem.DropBlocks();
+                }
+            }
+        }
     }
 }

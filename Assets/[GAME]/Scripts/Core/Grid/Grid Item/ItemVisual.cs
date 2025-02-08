@@ -68,7 +68,7 @@ namespace GarawellGames.Core
         {
             fillSprite.sortingOrder = 2;
             fillSprite.color = color;
-            fillSprite.transform.DOScale(1, visualParams.fillImageEnableTime);
+            fillSprite.transform.DOScale(0.85f, visualParams.fillImageEnableTime);
         }
 
 
