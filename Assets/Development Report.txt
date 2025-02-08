@@ -3,4 +3,8 @@ Day 1: I wrote the necessary core managers for the game. I prepared scene transi
  I completed the creation of the grid and the internal items in the game scene.
 
 Day 2: I prepared the prefabs and classes for the blocks to be placed. I completed the mechanics for the blocks to be placed in the cells.
- I finished filling the cells according to the placed blocks. I also completed the interactions of the affected cells.
+ I finished filling the cells according to the placed blocks. I also completed the interactions of the affected cells. Then I created the 
+ score system for filling cells mechanic.
+ 
+ Day 3: I completed the code for the scenarios that will occur when all the rows and columns are filled according to the cells filled on the grid. 
+ I also added the score gaining and incrementing system.

@@ -47,6 +47,12 @@ public class BlockController : MonoBehaviour
     private void OnMouseUp()
     {
         _isDragging = false;
+        
+        if (blockHelper.CanPlace && !_isFitting)
+        {
+            blockHelper.ItemToPlace.ResetEdges();
+        }
+        
         if (blockHelper.CanPlace && _isFitting)
         {
             PlaceBlock(blockHelper.ItemToPlace);
@@ -103,10 +109,16 @@ public class BlockController : MonoBehaviour
             }
         }
 
-        return (blockHelper.BlockDirections.Up && !item.CellDirections.Up) ||
-               (blockHelper.BlockDirections.Down && !item.CellDirections.Down) ||
-               (blockHelper.BlockDirections.Right && !item.CellDirections.Right) ||
-               (blockHelper.BlockDirections.Left && !item.CellDirections.Left);
+        // **Yeni Doğru Return Mantığı**
+        if ((blockHelper.BlockDirections.Up && item.CellDirections.Up) ||
+            (blockHelper.BlockDirections.Down && item.CellDirections.Down) ||
+            (blockHelper.BlockDirections.Right && item.CellDirections.Right) ||
+            (blockHelper.BlockDirections.Left && item.CellDirections.Left))
+        {
+            return false; // **Eğer herhangi bir yön eşleşiyorsa false döndür**
+        }
+
+        return true; // **Eğer hiç eşleşme yoksa true döndür**
     }
 
     private void PlaceBlock(CellItem item)
