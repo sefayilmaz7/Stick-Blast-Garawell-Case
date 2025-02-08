@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class BlockController : MonoBehaviour
 {
@@ -13,6 +14,8 @@ public class BlockController : MonoBehaviour
 
     [SerializeField] private BlockHelper blockHelper;
     [SerializeField] private Collider2D[] blockColliders;
+
+    public static event UnityAction<CellItem, Directions, Color> OnBlockPlaced; 
 
     private void Start()
     {
@@ -60,19 +63,18 @@ public class BlockController : MonoBehaviour
         if (blockHelper.BlockDirections.HasOnlyOneSide)
         {
             Vector3 localItemPosition = transform.InverseTransformPoint(item.transform.position);
-
-            // Eğer sadece Left ve Right seçiliyse
+            
             if (blockHelper.BlockDirections.Left || blockHelper.BlockDirections.Right &&
                 !blockHelper.BlockDirections.Up && !blockHelper.BlockDirections.Down)
             {
-                if (localItemPosition.x > 0) // Eğer sol
+                if (localItemPosition.x > 0) //Left
                 {
                     item.ResetEdges();
                     blockHelper.BlockDirections.Right = false;
                     blockHelper.BlockDirections.Left = true;
                     item.HighlightEdge(blockHelper.BlockDirections);
                 }
-                else if (localItemPosition.x < 0) // Eğer sağ
+                else if (localItemPosition.x < 0) //Right
                 {
                     item.ResetEdges();
                     blockHelper.BlockDirections.Right = true;
@@ -80,18 +82,17 @@ public class BlockController : MonoBehaviour
                     item.HighlightEdge(blockHelper.BlockDirections);
                 }
             }
-            // Eğer sadece Up ve Down seçiliyse
             else if (blockHelper.BlockDirections.Up || blockHelper.BlockDirections.Down &&
                      !blockHelper.BlockDirections.Left && !blockHelper.BlockDirections.Right)
             {
-                if (localItemPosition.y > 0) // Eğer yukarıdaysa
+                if (localItemPosition.y > 0) //Up
                 {
                     item.ResetEdges();
                     blockHelper.BlockDirections.Up = false;
                     blockHelper.BlockDirections.Down = true;
                     item.HighlightEdge(blockHelper.BlockDirections);
                 }
-                else if (localItemPosition.y < 0) // Eğer aşağıdaysa
+                else if (localItemPosition.y < 0) //Down
                 {
                     item.ResetEdges();
                     blockHelper.BlockDirections.Up = true;
@@ -112,10 +113,23 @@ public class BlockController : MonoBehaviour
         DisableColliders();
         if (blockHelper.BlockDirections.HasOnlyOneSide)
         {
-            transform.DOMove(item.GetEdgeItemByDirection(blockHelper.BlockDirections).transform.position, 0.5f).SetEase(Ease.OutBack);
-            return;
+            transform.DOMove(item.GetEdgeItemByDirection(blockHelper.BlockDirections).transform.position, 0.5f)
+                .SetEase(Ease.OutBack).OnComplete(() =>
+                {
+                    transform.SetParent(item.transform);
+                });
+            
         }
-        transform.DOMove(item.transform.position, 0.5f).SetEase(Ease.OutBack);
+        else
+        {
+            transform.DOMove(item.transform.position, 0.5f).SetEase(Ease.OutBack).OnComplete(() =>
+            {
+                transform.SetParent(item.transform);
+            });
+        }
+        
+        item.ResetEdges();
+        DOVirtual.DelayedCall(0.5f, () => OnBlockPlaced?.Invoke(item, blockHelper.BlockDirections, GetComponentInChildren<SpriteRenderer>().color));
     }
 
     private void DisableColliders()

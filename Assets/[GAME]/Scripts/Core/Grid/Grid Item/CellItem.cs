@@ -8,12 +8,17 @@ public class CellItem : ItemBase
 {
     public bool IsFilled = false;
     public Directions CellDirections;
-
     public CellItemEdge RightEdge;
     public CellItemEdge LeftEdge;
     public CellItemEdge UpEdge;
     public CellItemEdge DownEdge;
     
+
+    private bool CheckFilled()
+    {
+        return CellDirections.Right && CellDirections.Left && CellDirections.Up && CellDirections.Down;
+    }
+
     public void FillItem(Color color)
     {
         IsFilled = true;
@@ -58,6 +63,26 @@ public class CellItem : ItemBase
         LeftEdge.ResetEdge();
     }
 
+    private void AddDirections(Directions directions)
+    {
+        if (directions.Down)
+        {
+            CellDirections.Down = true;
+        }
+        if (directions.Up)
+        {
+            CellDirections.Up = true;
+        }
+        if (directions.Right)
+        {
+            CellDirections.Right = true;
+        }
+        if (directions.Left)
+        {
+            CellDirections.Left = true;
+        }
+    }
+
     public CellItemEdge GetEdgeItemByDirection(Directions blockDirections)
     {
         if (blockDirections.Down)
@@ -78,6 +103,30 @@ public class CellItem : ItemBase
         }
 
         return null;
+    }
+
+    private void OnBlockTaken(CellItem item, Directions directions, Color fillColor)
+    {
+        if (item != this)
+            return;
+
+        Debug.Log("Place Edildi" + " Up: " + directions.Up + "Down: " + directions.Down + "Right: " + directions.Right + "Left: " + directions.Left);
+        AddDirections(directions);
+        // Effect neighbour items
+        if (CheckFilled())
+        {
+            FillItem(fillColor);
+        }
+    }
+
+    private void OnEnable()
+    {
+        BlockController.OnBlockPlaced += OnBlockTaken;
+    }
+
+    private void OnDisable()
+    {
+        BlockController.OnBlockPlaced -= OnBlockTaken;
     }
 }
 

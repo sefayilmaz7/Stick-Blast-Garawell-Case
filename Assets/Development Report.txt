@@ -1,0 +1,6 @@
+Day 1: I wrote the necessary core managers for the game. I prepared scene transitions, basic scene components, and camera settings.
+ Then, I wrote the grid classes that form the foundation of the game. I wrote the code for the grid cells, rows, and columns. 
+ I completed the creation of the grid and the internal items in the game scene.
+
+Day 2: I prepared the prefabs and classes for the blocks to be placed. I completed the mechanics for the blocks to be placed in the cells.
+ I finished filling the cells according to the placed blocks. I also completed the interactions of the affected cells.

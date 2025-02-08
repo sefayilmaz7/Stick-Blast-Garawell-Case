@@ -648,8 +648,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   fillSprite: {fileID: 6373862180098320935}
   visualParams:
-    fillImageEnableTime: 0
-    lineDefaultColor: {r: 0, g: 0, b: 0, a: 0}
+    fillImageEnableTime: 0.3
+    lineDefaultColor: {r: 0.42745098, g: 0.34509805, b: 1, a: 1}
   diamond: {fileID: 8104942608998812323}
   gold: {fileID: 6567773230647170152}
   ruby: {fileID: 8393748253341764658}
@@ -723,7 +723,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 0.8, y: 0.8}
   m_EdgeRadius: 0
 --- !u!1 &6567773230647170152
 GameObject:
