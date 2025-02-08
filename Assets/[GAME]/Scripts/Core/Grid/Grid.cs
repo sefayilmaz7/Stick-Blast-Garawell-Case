@@ -115,20 +115,6 @@ namespace GarawellGames.Core
             return RowList[y].CellList[x];
         }
 
-        /*public List<RegularItem> GetAllRegularItems()
-        {
-            List<RegularItem> regularItems = new List<RegularItem>();
-            foreach (var cell in GetAllCells())
-            {
-                if (cell.HasItem() && cell.GetItem().IsRegular())
-                {
-                    regularItems.Add((RegularItem)cell.GetItem());
-                }
-            }
-
-            return regularItems;
-        }*/
-
         public Cell GetCellByIndex(int index)
         {
             if(UninitializedOrEmptyRowOrColumnList())

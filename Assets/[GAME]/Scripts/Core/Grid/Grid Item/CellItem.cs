@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using GarawellGames.Core;
 using UnityEngine;
+using Grid = GarawellGames.Core.Grid;
 
 public class CellItem : ItemBase
 {
@@ -12,17 +13,19 @@ public class CellItem : ItemBase
     public CellItemEdge LeftEdge;
     public CellItemEdge UpEdge;
     public CellItemEdge DownEdge;
-    
 
-    private bool CheckFilled()
+
+    public bool CheckFilled()
     {
+        bool c = CellDirections.Right && CellDirections.Left && CellDirections.Up && CellDirections.Down;
+        Debug.Log("Fill Check: " + c);
         return CellDirections.Right && CellDirections.Left && CellDirections.Up && CellDirections.Down;
     }
 
-    public void FillItem(Color color)
+    public void FillItem()
     {
         IsFilled = true;
-        itemVisual.FillCellItem(color);
+        itemVisual.FillCellItem(ColorManager.Instance.LevelColor);
     }
 
     public void ClearItem()
@@ -38,16 +41,19 @@ public class CellItem : ItemBase
             DownEdge.EdgeSprite.sortingOrder = 1;
             DownEdge.Highlight();
         }
+
         if (blockDirections.Up)
         {
             UpEdge.EdgeSprite.sortingOrder = 1;
             UpEdge.Highlight();
         }
+
         if (blockDirections.Right)
         {
             RightEdge.EdgeSprite.sortingOrder = 1;
             RightEdge.Highlight();
         }
+
         if (blockDirections.Left)
         {
             LeftEdge.EdgeSprite.sortingOrder = 1;
@@ -69,14 +75,17 @@ public class CellItem : ItemBase
         {
             CellDirections.Down = true;
         }
+
         if (directions.Up)
         {
             CellDirections.Up = true;
         }
+
         if (directions.Right)
         {
             CellDirections.Right = true;
         }
+
         if (directions.Left)
         {
             CellDirections.Left = true;
@@ -89,14 +98,17 @@ public class CellItem : ItemBase
         {
             return DownEdge;
         }
+
         if (blockDirections.Up)
         {
             return UpEdge;
         }
+
         if (blockDirections.Right)
         {
             return RightEdge;
         }
+
         if (blockDirections.Left)
         {
             return LeftEdge;
@@ -105,20 +117,113 @@ public class CellItem : ItemBase
         return null;
     }
 
-    private void OnBlockTaken(CellItem item, Directions directions, Color fillColor)
+    private void OnBlockTaken(CellItem item, Directions directions)
     {
         if (item != this)
             return;
 
-        Debug.Log("Place Edildi" + " Up: " + directions.Up + "Down: " + directions.Down + "Right: " + directions.Right + "Left: " + directions.Left);
         AddDirections(directions);
-        // Effect neighbour items
+        EffectNeighbours(directions);
         if (CheckFilled())
         {
-            FillItem(fillColor);
+            FillItem();
         }
     }
 
+    private void EffectNeighbours(Directions directions)
+    {
+        CheckUpCell(directions);
+        CheckDownCell(directions);
+        CheckRightCell(directions);
+        CheckLeftCell(directions);
+    }
+
+    #region Neighbour Updates
+    private void CheckLeftCell(Directions directions)
+    {
+        Grid grid = GameBuilder.Instance.GetGrid();
+
+        Cell leftCell = grid.GetCellByCoordinates(X - 1, Y);
+        if (leftCell != null)
+        {
+            if (directions.Left)
+            {
+                if (leftCell.GetItem() is CellItem leftItem)
+                {
+                    leftItem.CellDirections.Right = true;
+                    if (leftItem.CheckFilled())
+                    {
+                        leftItem.FillItem();
+                    }
+                }
+            }
+        }
+    }
+
+    private void CheckRightCell(Directions directions)
+    {
+        Grid grid = GameBuilder.Instance.GetGrid();
+
+        Cell rightCell = grid.GetCellByCoordinates(X + 1, Y);
+        if (rightCell != null)
+        {
+            if (directions.Right)
+            {
+                if (rightCell.GetItem() is CellItem rightItem)
+                {
+                    rightItem.CellDirections.Left = true;
+                    if (rightItem.CheckFilled())
+                    {
+                        rightItem.FillItem();
+                    }
+                }
+            }
+        }
+    }
+
+    private void CheckDownCell(Directions directions)
+    {
+        Grid grid = GameBuilder.Instance.GetGrid();
+
+        Cell downCell = grid.GetCellByCoordinates(X, Y + 1);
+        if (downCell != null)
+        {
+            if (directions.Down)
+            {
+                if (downCell.GetItem() is CellItem downItem)
+                {
+                    downItem.CellDirections.Up = true;
+                    if (downItem.CheckFilled())
+                    {
+                        downItem.FillItem();
+                    }
+                }
+            }
+        }
+    }
+
+    private void CheckUpCell(Directions directions)
+    {
+        Grid grid = GameBuilder.Instance.GetGrid();
+
+        Cell upCell = grid.GetCellByCoordinates(X, Y - 1);
+        if (upCell != null)
+        {
+            if (directions.Up)
+            {
+                if (upCell.GetItem() is CellItem upItem)
+                {
+                    upItem.CellDirections.Down = true;
+                    if (upItem.CheckFilled())
+                    {
+                        upItem.FillItem();
+                    }
+                }
+            }
+        }
+    }
+
+    #endregion
     private void OnEnable()
     {
         BlockController.OnBlockPlaced += OnBlockTaken;
