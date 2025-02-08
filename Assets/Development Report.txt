@@ -7,4 +7,4 @@ Day 2: I prepared the prefabs and classes for the blocks to be placed. I complet
  score system for filling cells mechanic.
  
  Day 3: I completed the code for the scenarios that will occur when all the rows and columns are filled according to the cells filled on the grid. 
- I also added the score gaining and incrementing system.
+ I also added the score gaining and incrementing system. I also prepared game sfx system and added required sound effect files.

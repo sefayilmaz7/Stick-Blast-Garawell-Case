@@ -144,6 +144,7 @@ public class BlockController : MonoBehaviour
         item.ResetEdges();
         DOVirtual.DelayedCall(0.5f, () => OnBlockPlaced?.Invoke(item, blockHelper.BlockDirections));
         OnBlockUsed?.Invoke();
+        item.AddBlockToList(gameObject);
     }
 
     private void DisableColliders()

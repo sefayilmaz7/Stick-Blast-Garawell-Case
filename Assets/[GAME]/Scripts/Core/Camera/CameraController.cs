@@ -5,12 +5,16 @@ using GarawellGames.Core;
 using UnityEngine;
 using Grid = GarawellGames.Core.Grid;
 
-public class CameraPositionSetter : MonoBehaviour
+public class CameraController : MonoBehaviour
 {
     [SerializeField] private Camera camera;
     [SerializeField] private float offset = 3;
     [SerializeField] private float yOffset;
 
+    private void ShakeCamera()
+    {
+        // Will Fill
+    }
     private void SetCamera()
     {
         Grid grid = GameBuilder.Instance.GetGrid();

@@ -1,9 +1,11 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using DG.Tweening;
 using GarawellGames.Core;
 using UnityEngine;
 using Grid = GarawellGames.Core.Grid;
+using Random = UnityEngine.Random;
 
 public class CellItem : ItemBase
 {
@@ -14,24 +16,50 @@ public class CellItem : ItemBase
     public CellItemEdge UpEdge;
     public CellItemEdge DownEdge;
 
+    private List<GameObject> _blocksInside = new List<GameObject>();
+
+    public void AddBlockToList(GameObject controller)
+    {
+        _blocksInside.Add(controller);
+    }
+
+    
+    private void DropBlocks()
+    {
+        foreach (var blockController in _blocksInside)
+        {
+            blockController.transform.DOMoveY(blockController.transform.position.y - 15, 2.5f);
+            blockController.transform
+                .DORotate(new Vector3(0, 0, Random.Range(0, 360)), 2.5f, RotateMode.FastBeyond360)
+                .OnComplete(() => Destroy(blockController));
+        }
+    }
 
     public bool CheckFilled()
     {
-        bool c = CellDirections.Right && CellDirections.Left && CellDirections.Up && CellDirections.Down;
-        Debug.Log("Fill Check: " + c);
         return CellDirections.Right && CellDirections.Left && CellDirections.Up && CellDirections.Down;
     }
 
     public void FillItem()
     {
+        ResetSortOrders();
         IsFilled = true;
         itemVisual.FillCellItem(ColorManager.Instance.LevelColor);
+    }
+
+    private void ResetSortOrders()
+    {
+        RightEdge.EdgeSprite.sortingOrder = 0;
+        LeftEdge.EdgeSprite.sortingOrder = 0;
+        UpEdge.EdgeSprite.sortingOrder = 0;
+        DownEdge.EdgeSprite.sortingOrder = 0;
     }
 
     public void ClearItem()
     {
         IsFilled = false;
         itemVisual.VisualReset();
+        _blocksInside.Clear();
     }
 
     public void HighlightEdge(Directions blockDirections)

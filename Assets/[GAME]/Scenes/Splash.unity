@@ -764,7 +764,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   dontDestroyOnLoad: 1
   audioSource: {fileID: 1623831784}
-  soundEffects: []
+  soundEffects:
+  - type: 0
+    clip: {fileID: 8300000, guid: acbd01cdf53506541ae5c30df72606a1, type: 3}
+  - type: 1
+    clip: {fileID: 8300000, guid: acbd01cdf53506541ae5c30df72606a1, type: 3}
+  - type: 2
+    clip: {fileID: 8300000, guid: c5a50f49a244b754c95c1b6526d47f4e, type: 3}
+  - type: 3
+    clip: {fileID: 0}
+  - type: 4
+    clip: {fileID: 8300000, guid: d602e9e78becac542a03db904f44d199, type: 3}
+  - type: 5
+    clip: {fileID: 8300000, guid: 158bcd8f1d5db764c878f62c516414e3, type: 3}
+  - type: 6
+    clip: {fileID: 8300000, guid: d0c28bc5c5bddb34bbbed6e62ea5d94d, type: 3}
 --- !u!82 &1623831784
 AudioSource:
   m_ObjectHideFlags: 0

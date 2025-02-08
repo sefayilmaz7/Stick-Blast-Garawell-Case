@@ -66,6 +66,7 @@ namespace GarawellGames.Core
 
         public void FillCellItem(Color color)
         {
+            fillSprite.sortingOrder = 2;
             fillSprite.color = color;
             fillSprite.transform.DOScale(1, visualParams.fillImageEnableTime);
         }

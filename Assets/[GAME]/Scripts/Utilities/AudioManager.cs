@@ -39,8 +39,13 @@ namespace GarawellGames.Managers
         [Serializable]
         public enum SoundType
         {
-            TEST_SOUND,
-            MENU_BUTTON_SELECTION
+            BLOCK_SELECT,
+            BLOCK_PLACED,
+            CELL_FILLED,
+            ROW_COLUMN_FILLED,
+            SUCCES,
+            FAIL,
+            BUTTON_CLICK
         }
     }
 
