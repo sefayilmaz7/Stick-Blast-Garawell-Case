@@ -679,6 +679,7 @@ MonoBehaviour:
   LeftEdge: {fileID: 5815011806089382857}
   UpEdge: {fileID: 3073075786406743425}
   DownEdge: {fileID: 6029467644468325329}
+  targetHolder: {fileID: 5487850721474558914}
 --- !u!114 &5487850721474558914
 MonoBehaviour:
   m_ObjectHideFlags: 0

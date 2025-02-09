@@ -31,6 +31,7 @@ public class BoardController : MonoBehaviour
             if (column.IsColumnFilled())
             {
                 column.ClearFilledColumn();
+                StartCoroutine(column.EarnPrizes());
                 OnRowOrColumnCleared?.Invoke();
             }
         }
@@ -43,6 +44,7 @@ public class BoardController : MonoBehaviour
             if (row.IsRowFilled())
             {
                 row.ClearFilledRow();
+                StartCoroutine(row.EarnPrizes());
                 OnRowOrColumnCleared?.Invoke();
             }
         }

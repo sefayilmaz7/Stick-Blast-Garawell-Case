@@ -47,5 +47,17 @@ namespace GarawellGames.Core
             }
         }
         
+        public IEnumerator EarnPrizes()
+        {
+            foreach (var cell in CellList)
+            {
+                if (cell.GetItem() is CellItem cellItem)
+                {
+                    cellItem.EarnPrize();
+                    yield return new WaitForSeconds(0.1f);
+                }
+            }
+        }
+        
     }
 }

@@ -47,15 +47,29 @@ public class InGameUIManager : Singleton<InGameUIManager>
         succesPanel.DOFade(1, 0.3f).From(0);
     }
 
+    private void AddProgress(TargetItem.TargetType type)
+    {
+        targetSlider.DOValue(targetSlider.value + 1, 0.08f).OnComplete(() =>
+        {
+            if (targetSlider.value >= targetSlider.maxValue)
+            {
+                Debug.Log("Succes From UI Manager");
+                GameStateManager.Instance.InvokeGameSucces();
+            }
+        });
+    }
+
     private void OnEnable()
     {
         GameStateManager.OnLevelFailed += ShowFailPanel;
         GameStateManager.OnLevelSucces += ShowSuccesPanel;
+        CellItemTargetHolder.OnTargetEarned += AddProgress;
     }
 
     private void OnDisable()
     {
         GameStateManager.OnLevelFailed -= ShowFailPanel;
         GameStateManager.OnLevelSucces -= ShowSuccesPanel;
+        CellItemTargetHolder.OnTargetEarned -= AddProgress;
     }
 }

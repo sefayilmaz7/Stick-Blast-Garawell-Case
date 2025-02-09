@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.Events;
 using Grid = GarawellGames.Core.Grid;
 
-public class GameStateManager : MonoBehaviour
+public class GameStateManager : Singleton<GameStateManager>
 {
     public static event UnityAction OnLevelSucces;
     public static event UnityAction OnLevelFailed;
@@ -48,6 +48,12 @@ public class GameStateManager : MonoBehaviour
         }
         
         OnLevelFailed?.Invoke();
+    }
+
+    public void InvokeGameSucces()
+    {
+        Debug.Log("Succes From state Manager");
+        OnLevelSucces?.Invoke();
     }
 
     private void OnEnable()

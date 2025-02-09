@@ -15,12 +15,19 @@ public class CellItem : ItemBase
     public CellItemEdge LeftEdge;
     public CellItemEdge UpEdge;
     public CellItemEdge DownEdge;
+
+    [SerializeField] private CellItemTargetHolder targetHolder;
     
 
     public void DropBlocks()
     {
         transform.DOPunchScale(Vector3.one * 0.1f, 0.2f, 0, 0.4f);
         ClearItem();
+    }
+
+    public void EarnPrize()
+    {
+        targetHolder.EarnTarget();
     }
 
     public bool CheckFilled()
