@@ -234,7 +234,7 @@ public class CellItem : ItemBase
             {
                 if (leftCell.GetItem() is CellItem leftItem)
                 {
-                    leftItem.RightEdge.EdgeSprite.color = ColorManager.Instance.LevelColor;
+                    leftItem.RightEdge.ColorizeEdge(ColorManager.Instance.LevelColor);
                     leftItem.CellDirections.Right = true;
                     if (leftItem.CheckFilled())
                     {
@@ -248,7 +248,7 @@ public class CellItem : ItemBase
                 {
                     if (leftItem.CellDirections.Right)
                     {
-                        LeftEdge.EdgeSprite.color = ColorManager.Instance.LevelColor;
+                        LeftEdge.ColorizeEdge(ColorManager.Instance.LevelColor);
                         CellDirections.Left = true;
                     }
                 }
@@ -267,7 +267,7 @@ public class CellItem : ItemBase
             {
                 if (rightCell.GetItem() is CellItem rightItem)
                 {
-                    rightItem.LeftEdge.EdgeSprite.color = ColorManager.Instance.LevelColor;
+                    rightItem.LeftEdge.ColorizeEdge(ColorManager.Instance.LevelColor);
                     rightItem.CellDirections.Left = true;
                     if (rightItem.CheckFilled())
                     {
@@ -281,7 +281,7 @@ public class CellItem : ItemBase
                 {
                     if (rightItem.CellDirections.Left)
                     {
-                        RightEdge.EdgeSprite.color = ColorManager.Instance.LevelColor;
+                        RightEdge.ColorizeEdge(ColorManager.Instance.LevelColor);
                         CellDirections.Right = true;
                     }
                 }
@@ -300,7 +300,7 @@ public class CellItem : ItemBase
             {
                 if (downCell.GetItem() is CellItem downItem)
                 {
-                    downItem.UpEdge.EdgeSprite.color = ColorManager.Instance.LevelColor;
+                    downItem.UpEdge.ColorizeEdge(ColorManager.Instance.LevelColor);
                     downItem.CellDirections.Up = true;
                     if (downItem.CheckFilled())
                     {
@@ -314,7 +314,7 @@ public class CellItem : ItemBase
                 {
                     if (downItem.CellDirections.Up)
                     {
-                        DownEdge.EdgeSprite.color = ColorManager.Instance.LevelColor;
+                        DownEdge.ColorizeEdge(ColorManager.Instance.LevelColor);
                         CellDirections.Down = true;
                     }
                 }
@@ -333,7 +333,7 @@ public class CellItem : ItemBase
             {
                 if (upCell.GetItem() is CellItem upItem)
                 {
-                    upItem.DownEdge.EdgeSprite.color = ColorManager.Instance.LevelColor;
+                    upItem.DownEdge.ColorizeEdge(ColorManager.Instance.LevelColor);
                     upItem.CellDirections.Down = true;
                     if (upItem.CheckFilled())
                     {
@@ -348,7 +348,7 @@ public class CellItem : ItemBase
                     if (upItem.CellDirections.Down)
                     {
                         CellDirections.Up = true;
-                        UpEdge.EdgeSprite.color = ColorManager.Instance.LevelColor;
+                        UpEdge.ColorizeEdge(ColorManager.Instance.LevelColor);
                     }
                 }
             }
@@ -409,11 +409,12 @@ public class CellItem : ItemBase
     {
         Grid grid = GameBuilder.Instance.GetGrid();
 
-        Cell leftCell = grid.GetCellByCoordinates(X+ 1, Y);
+        Cell leftCell = grid.GetCellByCoordinates(X- 1, Y);
         if (leftCell != null)
         {
             if (leftCell.GetItem() is CellItem leftItem)
             {
+                Debug.Log("Left Cell Clearing!"*Colorize.Orange);
                 leftItem.CellDirections.Right = false;
                 leftItem.UnFillItem();
                 leftItem.RightEdge.ResetEdge();

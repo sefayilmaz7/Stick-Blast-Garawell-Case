@@ -8,7 +8,6 @@ namespace GarawellGames.Core
     [Serializable][RequireComponent(typeof(ItemVisual))]
     public class ItemBase : MonoBehaviour
     {
-        [SerializeField] private Collider2D itemCollider;
         [SerializeField] protected ItemVisual itemVisual;
         public int X;
         public int Y;

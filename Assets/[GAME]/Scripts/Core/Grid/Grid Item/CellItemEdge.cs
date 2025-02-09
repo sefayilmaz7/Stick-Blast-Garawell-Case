@@ -21,4 +21,10 @@ public class CellItemEdge : MonoBehaviour
         EdgeSprite.sortingOrder = 0;
         EdgeSprite.color = edgeDefaultColor; 
     }
+
+    public void ColorizeEdge(Color color)
+    {
+        EdgeSprite.color = color;
+        EdgeSprite.sortingOrder = 1;
+    }
 }
