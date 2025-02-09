@@ -23,6 +23,7 @@ public class CellItem : ItemBase
     public void DropBlocks()
     {
         transform.DOPunchScale(Vector3.one * 0.1f, 0.2f, 0, 0.4f);
+        itemVisual.PlayDropEffect();
         ClearItem();
     }
 
