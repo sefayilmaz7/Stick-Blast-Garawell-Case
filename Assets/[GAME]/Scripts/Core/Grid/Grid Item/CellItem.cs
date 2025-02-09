@@ -18,8 +18,8 @@ public class CellItem : ItemBase
     public CellItemEdge DownEdge;
 
     [SerializeField] private CellItemTargetHolder targetHolder;
-    
 
+    
     public void DropBlocks()
     {
         transform.DOPunchScale(Vector3.one * 0.1f, 0.2f, 0, 0.4f);
@@ -182,6 +182,11 @@ public class CellItem : ItemBase
         }
 
         return null;
+    }
+    
+    public void EnableTargetItem()
+    {
+        targetHolder.SpawnTargetItem();
     }
 
     private void OnBlockTaken(CellItem item, Directions directions)

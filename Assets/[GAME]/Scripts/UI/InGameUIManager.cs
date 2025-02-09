@@ -15,12 +15,12 @@ public class InGameUIManager : Singleton<InGameUIManager>
     [SerializeField] private CanvasGroup failPanel;
     [SerializeField] private Image targetImage;
     [SerializeField] private TMP_Text targetText;
-    [SerializeField] private Slider targetSlider;
+    [SerializeField] private Slider _targetSlider;
 
-    public static event UnityAction<int, Sprite, TargetItem.TargetType> OnTargetAssigned;
 
-    private void Awake()
+    protected override void AwakeSingleton()
     {
+        base.AwakeSingleton();
         _data = LevelManager.Instance.GetLevelData();
         PrepTargetItems();
     }
@@ -32,8 +32,7 @@ public class InGameUIManager : Singleton<InGameUIManager>
         
         targetImage.sprite = _data.TargetSprite;
         targetText.text = _data.TargetAmount.ToString();
-        targetSlider.maxValue = _data.TargetAmount;
-        OnTargetAssigned?.Invoke(_data.TargetAmount, _data.TargetSprite, _data.TargetType);
+        _targetSlider.maxValue = _data.TargetAmount;
     }
 
     private void ShowFailPanel()
@@ -50,16 +49,35 @@ public class InGameUIManager : Singleton<InGameUIManager>
 
     private void AddProgress(TargetItem.TargetType type)
     {
-        targetSlider.DOValue(targetSlider.value + 1, 0.08f).OnComplete(() =>
+        _targetSlider.DOValue(_targetSlider.value + 1, 0.08f).OnComplete(() =>
         {
-            if (targetSlider.value >= targetSlider.maxValue)
+            if (_targetSlider.value >= _targetSlider.maxValue)
             {
-                Debug.Log("Succes From UI Manager");
                 GameStateManager.Instance.InvokeGameSucces();
             }
         });
     }
+    
+    public void MoveSpriteToTarget(SpriteRenderer spriteRenderer)
+    {
+        DecreaseTarget();
+        spriteRenderer.transform.SetParent(null);
+        Vector3 targetWorldPos = _targetSlider.transform.position;
+        
 
+        targetWorldPos = Camera.main.ScreenToWorldPoint(targetWorldPos);
+
+        spriteRenderer.transform.DOScale(0, 0.5f);
+        spriteRenderer.transform.DOLocalMove(targetWorldPos, 0.3f).SetEase(Ease.InOutQuad);
+    }
+    
+    private void DecreaseTarget()
+    {
+        int currentValue = int.Parse(targetText.text);
+        currentValue = Mathf.Max(0, currentValue - 1);
+        targetText.text = currentValue.ToString();
+    }
+    
     private void OnEnable()
     {
         GameStateManager.OnLevelFailed += ShowFailPanel;
@@ -73,4 +91,7 @@ public class InGameUIManager : Singleton<InGameUIManager>
         GameStateManager.OnLevelSucces -= ShowSuccesPanel;
         CellItemTargetHolder.OnTargetEarned -= AddProgress;
     }
-}
+
+    }
+
+

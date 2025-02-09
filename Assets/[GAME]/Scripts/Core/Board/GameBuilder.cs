@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Grid = GarawellGames.Core.Grid;
+using Random = UnityEngine.Random;
 
 public class GameBuilder : Singleton<GameBuilder>
 {
@@ -32,6 +33,12 @@ public class GameBuilder : Singleton<GameBuilder>
 
     private void BuildBoard(GameBuildData levelData)
     {
+        int targetAmount = 0;
+        if (_gameBuildData.TargetType != TargetItem.TargetType.Score)
+        {
+            targetAmount = _gameBuildData.TargetAmount;
+        }
+        
         for (int y = 0; y < _grid.Height; y++)
         {
             for (int x = 0; x < _grid.Width; x++)
@@ -39,8 +46,12 @@ public class GameBuilder : Singleton<GameBuilder>
                 CellItem baseItem = Instantiate(levelData.CellItem, transform);
                 
                 Vector2 itemPosition = new Vector2(x * _grid.CellSize, (_topPositionOfBoard - y) * _grid.CellSize);
-            
                 baseItem.Initialize(new int[] { x, y }, itemPosition, transform, _grid.GetCellByCoordinates(x,y), _gameBuildData.TargetType);
+                if (Random.Range(0,100) > 70 &&  targetAmount > 0)
+                {
+                    targetAmount--;
+                    baseItem.EnableTargetItem();
+                }
             } 
         }
     }
@@ -50,6 +61,11 @@ public class GameBuilder : Singleton<GameBuilder>
     public Grid GetGrid()
     {
         return _grid;
+    }
+
+    public GameBuildData GetData()
+    {
+        return _gameBuildData;
     }
 
     #endregion

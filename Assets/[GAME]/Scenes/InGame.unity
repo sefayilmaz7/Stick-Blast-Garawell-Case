@@ -584,12 +584,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dontDestroyOnLoad: 0
-  data: {fileID: 11400000, guid: 73e0db6ebc9b7d74eb6813cf234a50f8, type: 2}
   succesPanel: {fileID: 907710359}
   failPanel: {fileID: 500414010}
   targetImage: {fileID: 922425447}
   targetText: {fileID: 642520079}
-  targetSlider: {fileID: 1096563160}
+  _targetSlider: {fileID: 1096563160}
 --- !u!1 &169175947
 GameObject:
   m_ObjectHideFlags: 0
@@ -778,7 +777,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dontDestroyOnLoad: 0
-  data: {fileID: 11400000, guid: 73e0db6ebc9b7d74eb6813cf234a50f8, type: 2}
   LevelColor: {r: 0, g: 0, b: 0, a: 0}
 --- !u!4 &491952739
 Transform:
@@ -2287,7 +2285,6 @@ MonoBehaviour:
     Width: 0
     Height: 0
     CellSize: 0
-  gameBuildData: {fileID: 11400000, guid: 73e0db6ebc9b7d74eb6813cf234a50f8, type: 2}
 --- !u!1 &1614040936
 GameObject:
   m_ObjectHideFlags: 0
@@ -2643,7 +2640,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   SpawnedBlocks: []
-  data: {fileID: 11400000, guid: 73e0db6ebc9b7d74eb6813cf234a50f8, type: 2}
   blockPlaces:
   - {fileID: 971759829}
   - {fileID: 1501131323}

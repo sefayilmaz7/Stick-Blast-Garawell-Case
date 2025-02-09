@@ -17,7 +17,7 @@ namespace GarawellGames.Core
         {
             X = coordinates[0];
             Y = coordinates[1];
-            itemVisual.InitializeVisual(position, parent, targetType);
+            itemVisual.InitializeVisual(position, parent);
             cell.SetItem(this);
         }
 

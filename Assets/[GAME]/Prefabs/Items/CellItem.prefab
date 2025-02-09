@@ -649,9 +649,6 @@ MonoBehaviour:
   visualParams:
     fillImageEnableTime: 0.3
     lineDefaultColor: {r: 0.42745098, g: 0.34509805, b: 1, a: 1}
-  diamond: {fileID: 8104942608998812323}
-  gold: {fileID: 0}
-  ruby: {fileID: 0}
 --- !u!114 &4164021621785232859
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -693,7 +690,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   HasTargetItem: 0
-  targetItemImage: {fileID: 1010827171827771076}
+  targetItemSprite: {fileID: 1010827171827771076}
 --- !u!61 &7297893684679771067
 BoxCollider2D:
   m_ObjectHideFlags: 0

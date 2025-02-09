@@ -14,18 +14,11 @@ namespace GarawellGames.Core
     {
         [SerializeField] private SpriteRenderer fillSprite;
         [SerializeField] private VisualParams visualParams;
-        [SerializeField] private GameObject diamond;
-        [SerializeField] private GameObject gold;
-        [SerializeField] private GameObject ruby;
 
-        public void InitializeVisual(Vector2 position, Transform parent, TargetItem.TargetType type = TargetItem.TargetType.Score)
+        public void InitializeVisual(Vector2 position, Transform parent)
         {
             transform.localPosition = position;
             transform.SetParent(parent);
-            if (type != TargetItem.TargetType.Score)
-            {
-                AssignTargetItemVisual(type);
-            }
         }
         public void VisualReset()
         {
@@ -45,22 +38,6 @@ namespace GarawellGames.Core
                 {
                     child.gameObject.SetActive(false);
                 }
-            }
-        }
-
-        public void AssignTargetItemVisual(TargetItem.TargetType type)
-        {
-            switch (type)
-            {
-                case TargetItem.TargetType.Diamond:
-                    diamond.SetActive(true);
-                    break;
-                case TargetItem.TargetType.Gold:
-                    gold.SetActive(true);
-                    break;
-                case TargetItem.TargetType.Ruby:
-                    ruby.SetActive(true);
-                    break;
             }
         }
 

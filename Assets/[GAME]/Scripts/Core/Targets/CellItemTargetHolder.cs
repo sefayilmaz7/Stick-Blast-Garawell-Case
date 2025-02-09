@@ -11,23 +11,29 @@ public class CellItemTargetHolder : MonoBehaviour
     public static event UnityAction<TargetItem.TargetType> OnTargetEarned; 
     public bool HasTargetItem = false;
 
-    [SerializeField] private SpriteRenderer targetItemImage;
+    [SerializeField] private SpriteRenderer targetItemSprite;
 
     private TargetItem.TargetType _currentTargetType;
 
+    private void Start()
+    {
+        GameBuildData data = GameBuilder.Instance.GetData();
+        SetTargetItemValues(data.TargetAmount, data.TargetSprite, data.TargetType);
+    }
+
     private void SetTargetItemValues(int amount, Sprite targetSprite, TargetItem.TargetType type)
     {
-        targetItemImage.sprite = targetSprite;
+        targetItemSprite.sprite = targetSprite;
         _currentTargetType = type;
     }
 
-    private void SpawnTargetItem()
+    public void SpawnTargetItem()
     {
-        if (HasTargetItem || _currentTargetType == TargetItem.TargetType.Score)
-            return;
+        /*if (HasTargetItem || _currentTargetType == TargetItem.TargetType.Score)
+            return;*/
 
         HasTargetItem = true;
-        targetItemImage.transform.DOScale(0.5f, 0.2f);
+        targetItemSprite.transform.DOScale(0.5f, 0.2f);
     }
 
     public void EarnTarget()
@@ -38,17 +44,12 @@ public class CellItemTargetHolder : MonoBehaviour
         }
         else if (_currentTargetType != TargetItem.TargetType.Score && HasTargetItem)
         {
+            var itemToMove = Instantiate(targetItemSprite.gameObject, transform);
+            InGameUIManager.Instance.MoveSpriteToTarget(itemToMove.GetComponent<SpriteRenderer>());
+            targetItemSprite.transform.DOScale(0, 0);
+            HasTargetItem = false;
             OnTargetEarned?.Invoke(_currentTargetType);
         }
     }
-
-    private void OnEnable()
-    {
-        InGameUIManager.OnTargetAssigned += SetTargetItemValues;
-    }
-
-    private void OnDisable()
-    {
-        InGameUIManager.OnTargetAssigned -= SetTargetItemValues;
-    }
+    
 }
