@@ -28,7 +28,8 @@ public class LevelManager : Singleton<LevelManager>
 
     public void LevelUp()
     {
-        PlayerPrefs.SetInt(PrefKeys.PLAYER_LEVEL, CurrentLevel + 1);
+        CurrentLevel++;
+        PlayerPrefs.SetInt(PrefKeys.PLAYER_LEVEL, CurrentLevel);
     }
 
     public GameBuildData GetLevelData()

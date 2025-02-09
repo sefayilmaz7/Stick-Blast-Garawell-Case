@@ -21,5 +21,10 @@ namespace GarawellGames.UI
             LevelManager.Instance.LevelUp();
             SceneManager.Instance.LoadScene(SceneKeys.IN_GAME_SCENE);
         }
+
+        private void OnEnable()
+        {
+            AudioManager.Instance.PlayAnySound(AudioManager.SoundType.SUCCES);
+        }
     }
 }

@@ -9,7 +9,7 @@ using UnityEngine.UI;
 
 public class InGameUIManager : Singleton<InGameUIManager>
 {
-    [SerializeField] private GameBuildData data; // temp
+    private GameBuildData _data;
 
     [SerializeField] private CanvasGroup succesPanel;
     [SerializeField] private CanvasGroup failPanel;
@@ -21,18 +21,19 @@ public class InGameUIManager : Singleton<InGameUIManager>
 
     private void Awake()
     {
+        _data = LevelManager.Instance.GetLevelData();
         PrepTargetItems();
     }
 
     private void PrepTargetItems()
     {
-        if(!data)
+        if(!_data)
             return;
         
-        targetImage.sprite = data.TargetSprite;
-        targetText.text = data.TargetAmount.ToString();
-        targetSlider.maxValue = data.TargetAmount;
-        OnTargetAssigned?.Invoke(data.TargetAmount, data.TargetSprite, data.TargetType);
+        targetImage.sprite = _data.TargetSprite;
+        targetText.text = _data.TargetAmount.ToString();
+        targetSlider.maxValue = _data.TargetAmount;
+        OnTargetAssigned?.Invoke(_data.TargetAmount, _data.TargetSprite, _data.TargetType);
     }
 
     private void ShowFailPanel()

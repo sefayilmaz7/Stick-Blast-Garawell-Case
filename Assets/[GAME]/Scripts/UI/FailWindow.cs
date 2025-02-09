@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using GarawellGames.Managers;
@@ -18,6 +19,11 @@ namespace GarawellGames.UI
         private void PlayAgain()
         {
             SceneManager.Instance.LoadScene(SceneKeys.IN_GAME_SCENE);
+        }
+
+        private void OnEnable()
+        {
+            AudioManager.Instance.PlayAnySound(AudioManager.SoundType.FAIL);
         }
     }
 }

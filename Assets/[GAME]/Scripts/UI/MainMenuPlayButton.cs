@@ -21,7 +21,11 @@ namespace GarawellGames.UI
         private void Init()
         {
             buttonText.text = "LEVEL " + LevelManager.Instance.CurrentLevel;
-            playButton.onClick.AddListener(()=> SceneManager.Instance.LoadScene(SceneKeys.IN_GAME_SCENE));
+            playButton.onClick.AddListener(()=>
+            {
+                AudioManager.Instance.PlayAnySound(AudioManager.SoundType.BUTTON_CLICK);
+                SceneManager.Instance.LoadScene(SceneKeys.IN_GAME_SCENE);
+            });
         }
     }
 }

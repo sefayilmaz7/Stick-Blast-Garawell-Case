@@ -1,6 +1,7 @@
 using System;
 using DG.Tweening;
 using GarawellGames.Core;
+using GarawellGames.Managers;
 using UnityEngine;
 using UnityEngine.Events;
 using Grid = GarawellGames.Core.Grid;
@@ -39,6 +40,7 @@ public class CellItem : ItemBase
     {
         ResetSortOrders();
         IsFilled = true;
+        AudioManager.Instance.PlayAnySound(AudioManager.SoundType.CELL_FILLED);
         itemVisual.FillCellItem(ColorManager.Instance.LevelColor);
     }
 

@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening;
+using GarawellGames.Managers;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -25,6 +26,7 @@ public class BlockController : MonoBehaviour
 
     private void OnMouseDown()
     {
+        AudioManager.Instance.PlayAnySound(AudioManager.SoundType.BLOCK_SELECT);
         _isDragging = true;
     }
 
@@ -149,6 +151,7 @@ public class BlockController : MonoBehaviour
             transform.DOMove(item.GetEdgeItemByDirection(BlockHelper.BlockDirections).transform.position, 0.25f)
                 .SetEase(Ease.OutBack).OnComplete(() =>
                 {
+                    AudioManager.Instance.PlayAnySound(AudioManager.SoundType.BLOCK_PLACED);
                     transform.SetParent(item.transform);
                 });
             
@@ -157,6 +160,7 @@ public class BlockController : MonoBehaviour
         {
             transform.DOMove(item.transform.position, 0.25f).SetEase(Ease.OutBack).OnComplete(() =>
             {
+                AudioManager.Instance.PlayAnySound(AudioManager.SoundType.BLOCK_PLACED);
                 transform.SetParent(item.transform);
             });
         }

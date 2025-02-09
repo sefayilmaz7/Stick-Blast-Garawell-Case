@@ -9,16 +9,17 @@ using Random = UnityEngine.Random;
 public class BlocksPanel : MonoBehaviour
 {
     public List<BlockController> SpawnedBlocks = new List<BlockController>();
-    public GameBuildData data; // temporary it will get from levelmanager
 
     [SerializeField] private Transform[] blockPlaces; 
     
     private BlockHelper[] _availableBlocks;
     private int _activeBlockCount = 3;
+    private GameBuildData _data;
 
     private void Awake()
     {
-        _availableBlocks = data.LevelBlocks;
+        _data = LevelManager.Instance.GetLevelData();
+        _availableBlocks = _data.LevelBlocks;
     }
 
     private void Start()
@@ -35,7 +36,7 @@ public class BlocksPanel : MonoBehaviour
             var spawnedBlock = Instantiate(blockToSpawn, blockPlaces[i].position + new Vector3(blockToSpawn.PlacingOffset.x, blockToSpawn.PlacingOffset.y), blockToSpawn.transform.rotation, blockPlaces[i]);
             foreach (var sprite in spawnedBlock.BlockSprites)
             {
-                sprite.color = data.BlockColorForLevel;
+                sprite.color = _data.BlockColorForLevel;
             }
 
             if (animate)
