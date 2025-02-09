@@ -17,6 +17,7 @@ MonoBehaviour:
   Height: 5
   TargetType: 0
   TargetAmount: 200
+  TargetSprite: {fileID: 21300000, guid: b5a330461f38b3145b01dd9b57031892, type: 3}
   BlockColorForLevel: {r: 1, g: 0.50728744, b: 0, a: 1}
   LevelBlocks:
   - {fileID: 3363686855875139519, guid: 1eb5a0340eddfb642b6b38bdabac0c29, type: 3}

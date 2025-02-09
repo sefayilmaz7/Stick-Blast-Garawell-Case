@@ -11,6 +11,8 @@ public class GameBuildData : ScriptableObject
     public int Height;
     public TargetItem.TargetType TargetType;
     public int TargetAmount;
+    public Sprite TargetSprite;
     public Color BlockColorForLevel;
     public BlockHelper[] LevelBlocks;
+
 }

@@ -10,20 +10,15 @@ public class CellItemEdge : MonoBehaviour
     
     public CellItem CellItem;
     public SpriteRenderer EdgeSprite;
-
-    /*public void SwitchEdgeCollider(bool enable)
-    {
-        edgeCollider.enabled = enable;
-    }*/
-
+    
     public void Highlight()
     {
-        GetComponent<SpriteRenderer>().color = edgeSelectedColor;
+        EdgeSprite.color = edgeSelectedColor;
     }
 
     public void ResetEdge()
     {
         EdgeSprite.sortingOrder = 0;
-        GetComponent<SpriteRenderer>().color = edgeDefaultColor; 
+        EdgeSprite.color = edgeDefaultColor; 
     }
 }

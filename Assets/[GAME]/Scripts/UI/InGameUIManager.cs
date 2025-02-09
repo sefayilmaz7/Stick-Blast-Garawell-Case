@@ -1,18 +1,34 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
+using UnityEngine.Events;
+using UnityEngine.UI;
 
-public class InGameUIManager : MonoBehaviour
+public class InGameUIManager : Singleton<InGameUIManager>
 {
-    // Start is called before the first frame update
-    void Start()
+    [SerializeField] private GameBuildData data; // temp
+
+    [SerializeField] private Image targetImage;
+    [SerializeField] private TMP_Text targetText;
+    [SerializeField] private Slider targetSlider;
+
+    public static event UnityAction<int, Sprite, TargetItem.TargetType> OnTargetAssigned;
+
+    private void Awake()
     {
-        
+        PrepTargetItems();
     }
 
-    // Update is called once per frame
-    void Update()
+    private void PrepTargetItems()
     {
+        if(!data)
+            return;
         
+        targetImage.sprite = data.TargetSprite;
+        targetText.text = data.TargetAmount.ToString();
+        targetSlider.maxValue = data.TargetAmount;
+        OnTargetAssigned?.Invoke(data.TargetAmount, data.TargetSprite, data.TargetType);
     }
 }

@@ -1,12 +1,9 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using DG.Tweening;
 using GarawellGames.Core;
 using UnityEngine;
 using UnityEngine.Events;
 using Grid = GarawellGames.Core.Grid;
-using Random = UnityEngine.Random;
 
 public class CellItem : ItemBase
 {
@@ -18,24 +15,11 @@ public class CellItem : ItemBase
     public CellItemEdge LeftEdge;
     public CellItemEdge UpEdge;
     public CellItemEdge DownEdge;
-
-    private List<GameObject> _blocksInside = new List<GameObject>();
-
-    public void AddBlockToList(GameObject controller)
-    {
-        _blocksInside.Add(controller);
-    }
+    
 
     public void DropBlocks()
     {
-        foreach (var blockController in _blocksInside)
-        {
-            blockController.transform.DOMoveY(blockController.transform.position.y - 15, 2.5f);
-            blockController.transform
-                .DORotate(new Vector3(0, 0, Random.Range(0, 360)), 2.5f, RotateMode.FastBeyond360)
-                .OnComplete(() => Destroy(blockController));
-        }
-
+        transform.DOPunchScale(Vector3.one * 0.1f, 0.2f, 0, 0.4f);
         ClearItem();
     }
 
@@ -68,8 +52,7 @@ public class CellItem : ItemBase
     {
         IsFilled = false;
         itemVisual.VisualReset();
-        _blocksInside.Clear();
-        ResetEdges();
+        ForceResetEdges();
         ResetDirections();
         ClearNeighbours();
     }
@@ -109,7 +92,7 @@ public class CellItem : ItemBase
         CellDirections.Right = false;
     }
 
-    public void ResetEdges()
+    private void ForceResetEdges()
     {
         DownEdge.ResetEdge();
         UpEdge.ResetEdge();
@@ -117,25 +100,52 @@ public class CellItem : ItemBase
         LeftEdge.ResetEdge();
     }
 
+    public void ResetEdges()
+    {
+        if (!CellDirections.Down)
+        {
+            DownEdge.ResetEdge();
+        }
+
+        if (!CellDirections.Up)
+        {
+            UpEdge.ResetEdge();
+        }
+
+        if (!CellDirections.Right)
+        {
+            RightEdge.ResetEdge();
+        }
+
+        if (!CellDirections.Left)
+        {
+            LeftEdge.ResetEdge();
+        }
+    }
+
     private void AddDirections(Directions directions)
     {
         if (directions.Down)
         {
+            DownEdge.EdgeSprite.color = ColorManager.Instance.LevelColor;
             CellDirections.Down = true;
         }
 
         if (directions.Up)
         {
+            UpEdge.EdgeSprite.color = ColorManager.Instance.LevelColor;
             CellDirections.Up = true;
         }
 
         if (directions.Right)
         {
+            RightEdge.EdgeSprite.color = ColorManager.Instance.LevelColor;
             CellDirections.Right = true;
         }
 
         if (directions.Left)
         {
+            LeftEdge.EdgeSprite.color = ColorManager.Instance.LevelColor;
             CellDirections.Left = true;
         }
     }
@@ -209,6 +219,7 @@ public class CellItem : ItemBase
             {
                 if (leftCell.GetItem() is CellItem leftItem)
                 {
+                    leftItem.RightEdge.EdgeSprite.color = ColorManager.Instance.LevelColor;
                     leftItem.CellDirections.Right = true;
                     if (leftItem.CheckFilled())
                     {
@@ -222,6 +233,7 @@ public class CellItem : ItemBase
                 {
                     if (leftItem.CellDirections.Right)
                     {
+                        LeftEdge.EdgeSprite.color = ColorManager.Instance.LevelColor;
                         CellDirections.Left = true;
                     }
                 }
@@ -240,6 +252,7 @@ public class CellItem : ItemBase
             {
                 if (rightCell.GetItem() is CellItem rightItem)
                 {
+                    rightItem.LeftEdge.EdgeSprite.color = ColorManager.Instance.LevelColor;
                     rightItem.CellDirections.Left = true;
                     if (rightItem.CheckFilled())
                     {
@@ -253,6 +266,7 @@ public class CellItem : ItemBase
                 {
                     if (rightItem.CellDirections.Left)
                     {
+                        RightEdge.EdgeSprite.color = ColorManager.Instance.LevelColor;
                         CellDirections.Right = true;
                     }
                 }
@@ -271,6 +285,7 @@ public class CellItem : ItemBase
             {
                 if (downCell.GetItem() is CellItem downItem)
                 {
+                    downItem.UpEdge.EdgeSprite.color = ColorManager.Instance.LevelColor;
                     downItem.CellDirections.Up = true;
                     if (downItem.CheckFilled())
                     {
@@ -284,6 +299,7 @@ public class CellItem : ItemBase
                 {
                     if (downItem.CellDirections.Up)
                     {
+                        DownEdge.EdgeSprite.color = ColorManager.Instance.LevelColor;
                         CellDirections.Down = true;
                     }
                 }
@@ -302,6 +318,7 @@ public class CellItem : ItemBase
             {
                 if (upCell.GetItem() is CellItem upItem)
                 {
+                    upItem.DownEdge.EdgeSprite.color = ColorManager.Instance.LevelColor;
                     upItem.CellDirections.Down = true;
                     if (upItem.CheckFilled())
                     {
@@ -316,6 +333,7 @@ public class CellItem : ItemBase
                     if (upItem.CellDirections.Down)
                     {
                         CellDirections.Up = true;
+                        UpEdge.EdgeSprite.color = ColorManager.Instance.LevelColor;
                     }
                 }
             }
@@ -332,8 +350,8 @@ public class CellItem : ItemBase
             if (upCell.GetItem() is CellItem upItem)
             {
                 upItem.CellDirections.Down = false;
-                upItem.DownEdge.ResetEdge();
                 upItem.UnFillItem();
+                upItem.DownEdge.ResetEdge();
             }
         }
     }
@@ -348,8 +366,9 @@ public class CellItem : ItemBase
             if (downCell.GetItem() is CellItem downItem)
             {
                 downItem.CellDirections.Up = false;
-                downItem.UpEdge.ResetEdge();
                 downItem.UnFillItem();
+                downItem.UpEdge.ResetEdge();
+
             }
         }
     }
@@ -364,8 +383,9 @@ public class CellItem : ItemBase
             if (rightCell.GetItem() is CellItem rightItem)
             {
                 rightItem.CellDirections.Left = false;
-                rightItem.LeftEdge.ResetEdge();
                 rightItem.UnFillItem();
+                rightItem.LeftEdge.ResetEdge();
+
             }
         }
     }
@@ -380,8 +400,8 @@ public class CellItem : ItemBase
             if (leftCell.GetItem() is CellItem leftItem)
             {
                 leftItem.CellDirections.Right = false;
-                leftItem.RightEdge.ResetEdge();
                 leftItem.UnFillItem();
+                leftItem.RightEdge.ResetEdge();
             }
         }
     }

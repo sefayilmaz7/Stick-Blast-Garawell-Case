@@ -30,8 +30,8 @@ namespace GarawellGames.Core
         public void VisualReset()
         {
             if (!fillSprite) return;
-
-            fillSprite.transform.DOScale(0,0);
+            
+            fillSprite.transform.DOScale(0,0.2f);
             CloseUnnecessaryVisual();
             //Do reset here
         }
@@ -68,7 +68,7 @@ namespace GarawellGames.Core
         {
             fillSprite.sortingOrder = 2;
             fillSprite.color = color;
-            fillSprite.transform.DOScale(0.85f, visualParams.fillImageEnableTime);
+            fillSprite.transform.DOScale(0.9f, visualParams.fillImageEnableTime);
         }
 
 

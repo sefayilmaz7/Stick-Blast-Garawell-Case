@@ -62,7 +62,7 @@ public class BlockController : MonoBehaviour
         transform.DOMove(_startPosition, 0.5f).SetEase(Ease.OutBack);
     }
 
-    private bool CanFit(CellItem item)
+    public bool CanFit(CellItem item)
     {
         if (item == null)
             return false;
@@ -74,14 +74,14 @@ public class BlockController : MonoBehaviour
             if (blockHelper.BlockDirections.Left || blockHelper.BlockDirections.Right &&
                 !blockHelper.BlockDirections.Up && !blockHelper.BlockDirections.Down)
             {
-                if (localItemPosition.x > 0) //Left
+                if (localItemPosition.x > 0 && !item.CellDirections.Left) //Left
                 {
                     item.ResetEdges();
                     blockHelper.BlockDirections.Right = false;
                     blockHelper.BlockDirections.Left = true;
                     item.HighlightEdge(blockHelper.BlockDirections);
                 }
-                else if (localItemPosition.x < 0) //Right
+                else if (localItemPosition.x < 0 && !item.CellDirections.Right) //Right
                 {
                     item.ResetEdges();
                     blockHelper.BlockDirections.Right = true;
@@ -92,14 +92,14 @@ public class BlockController : MonoBehaviour
             else if (blockHelper.BlockDirections.Up || blockHelper.BlockDirections.Down &&
                      !blockHelper.BlockDirections.Left && !blockHelper.BlockDirections.Right)
             {
-                if (localItemPosition.y > 0) //Up
+                if (localItemPosition.y > 0 && !item.CellDirections.Down) //Up
                 {
                     item.ResetEdges();
                     blockHelper.BlockDirections.Up = false;
                     blockHelper.BlockDirections.Down = true;
                     item.HighlightEdge(blockHelper.BlockDirections);
                 }
-                else if (localItemPosition.y < 0) //Down
+                else if (localItemPosition.y < 0 && !item.CellDirections.Up) //Down
                 {
                     item.ResetEdges();
                     blockHelper.BlockDirections.Up = true;
@@ -108,17 +108,16 @@ public class BlockController : MonoBehaviour
                 }
             }
         }
-
-        // **Yeni Doğru Return Mantığı**
+        
         if ((blockHelper.BlockDirections.Up && item.CellDirections.Up) ||
             (blockHelper.BlockDirections.Down && item.CellDirections.Down) ||
             (blockHelper.BlockDirections.Right && item.CellDirections.Right) ||
             (blockHelper.BlockDirections.Left && item.CellDirections.Left))
         {
-            return false; // **Eğer herhangi bir yön eşleşiyorsa false döndür**
+            return false; 
         }
 
-        return true; // **Eğer hiç eşleşme yoksa true döndür**
+        return true; 
     }
 
     private void PlaceBlock(CellItem item)
@@ -142,9 +141,14 @@ public class BlockController : MonoBehaviour
         }
         
         item.ResetEdges();
-        DOVirtual.DelayedCall(0.5f, () => OnBlockPlaced?.Invoke(item, blockHelper.BlockDirections));
         OnBlockUsed?.Invoke();
-        item.AddBlockToList(gameObject);
+        
+        DOVirtual.DelayedCall(0.5f, () =>
+        {
+            OnBlockPlaced?.Invoke(item, blockHelper.BlockDirections);
+            Destroy(gameObject);
+        });
+
     }
 
     private void DisableColliders()
