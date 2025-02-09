@@ -12,12 +12,13 @@ public class BlockController : MonoBehaviour
     private bool _isDragging = false;
     private float _dragYOffset = 1f;
     private bool _isFitting = false;
+    private bool _canGetInput = true;
 
     public BlockHelper BlockHelper;
     [SerializeField] private Collider2D[] blockColliders;
 
-    public static event UnityAction<CellItem, Directions> OnBlockPlaced; 
-    public static event UnityAction OnBlockUsed; 
+    public static event UnityAction<CellItem, Directions> OnBlockPlaced;
+    public static event UnityAction OnBlockUsed;
 
     private void Start()
     {
@@ -26,6 +27,9 @@ public class BlockController : MonoBehaviour
 
     private void OnMouseDown()
     {
+        if (!_canGetInput)
+            return;
+
         AudioManager.Instance.PlayAnySound(AudioManager.SoundType.BLOCK_SELECT);
         _isDragging = true;
     }
@@ -49,12 +53,12 @@ public class BlockController : MonoBehaviour
     private void OnMouseUp()
     {
         _isDragging = false;
-        
+
         if (BlockHelper.CanPlace && !_isFitting)
         {
             BlockHelper.ItemToPlace.ResetEdges();
         }
-        
+
         if (BlockHelper.CanPlace && _isFitting)
         {
             PlaceBlock(BlockHelper.ItemToPlace);
@@ -72,7 +76,7 @@ public class BlockController : MonoBehaviour
         if (BlockHelper.BlockDirections.HasOnlyOneSide)
         {
             Vector3 localItemPosition = transform.InverseTransformPoint(item.transform.position);
-            
+
             if (BlockHelper.BlockDirections.Left || BlockHelper.BlockDirections.Right &&
                 !BlockHelper.BlockDirections.Up && !BlockHelper.BlockDirections.Down)
             {
@@ -110,16 +114,16 @@ public class BlockController : MonoBehaviour
                 }
             }
         }
-        
+
         if ((BlockHelper.BlockDirections.Up && item.CellDirections.Up) ||
             (BlockHelper.BlockDirections.Down && item.CellDirections.Down) ||
             (BlockHelper.BlockDirections.Right && item.CellDirections.Right) ||
             (BlockHelper.BlockDirections.Left && item.CellDirections.Left))
         {
-            return false; 
+            return false;
         }
 
-        return true; 
+        return true;
     }
 
     public bool CanFitForOneSided(CellItem item)
@@ -131,7 +135,7 @@ public class BlockController : MonoBehaviour
                 return true;
             }
         }
-        
+
         if (BlockHelper.BlockDirections.Up && BlockHelper.BlockDirections.Down)
         {
             if (!item.CellDirections.Up || !item.CellDirections.Down)
@@ -154,7 +158,6 @@ public class BlockController : MonoBehaviour
                     AudioManager.Instance.PlayAnySound(AudioManager.SoundType.BLOCK_PLACED);
                     transform.SetParent(item.transform);
                 });
-            
         }
         else
         {
@@ -164,16 +167,15 @@ public class BlockController : MonoBehaviour
                 transform.SetParent(item.transform);
             });
         }
-        
+
         item.ResetEdges();
         OnBlockUsed?.Invoke();
-        
+
         DOVirtual.DelayedCall(0.26f, () =>
         {
             OnBlockPlaced?.Invoke(item, BlockHelper.BlockDirections);
             Destroy(gameObject);
         });
-
     }
 
     private void DisableColliders()
@@ -198,5 +200,22 @@ public class BlockController : MonoBehaviour
         Vector3 mouseScreenPos = Input.mousePosition;
         mouseScreenPos.z = Camera.main.WorldToScreenPoint(transform.position).z;
         return Camera.main.ScreenToWorldPoint(mouseScreenPos);
+    }
+
+    private void DisableInput()
+    {
+        _canGetInput = false;
+    }
+
+    private void OnEnable()
+    {
+        GameStateManager.OnLevelSucces += DisableInput;
+        GameStateManager.OnLevelFailed += DisableInput;
+    }
+
+    private void OnDisable()
+    {
+        GameStateManager.OnLevelSucces -= DisableInput;
+        GameStateManager.OnLevelFailed -= DisableInput;
     }
 }

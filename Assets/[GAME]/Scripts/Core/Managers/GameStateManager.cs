@@ -14,6 +14,9 @@ public class GameStateManager : Singleton<GameStateManager>
 
     private Grid _grid;
 
+    private bool _isSucces = false;
+    private bool _isFail = false;
+
     private void Start()
     {
         _grid = GameBuilder.Instance.GetGrid();
@@ -21,13 +24,16 @@ public class GameStateManager : Singleton<GameStateManager>
 
     private void CheckGameFail()
     {
+        if (_isFail)
+            return;
+
         foreach (var block in blocksPanel.SpawnedBlocks)
         {
             if (block == null)
             {
                 continue;
             }
-            
+
             foreach (var item in _grid.GetAllItems())
             {
                 if (item is CellItem cellItem && block.BlockHelper.BlockDirections.HasOnlyOneSide)
@@ -46,13 +52,17 @@ public class GameStateManager : Singleton<GameStateManager>
                 }
             }
         }
-        
+
+        _isFail = true;
         OnLevelFailed?.Invoke();
     }
 
     public void InvokeGameSucces()
     {
-        Debug.Log("Succes From state Manager");
+        if (_isSucces)
+            return;
+
+        _isSucces = true;
         OnLevelSucces?.Invoke();
     }
 
