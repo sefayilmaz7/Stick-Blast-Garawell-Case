@@ -12,7 +12,7 @@ public class BlockController : MonoBehaviour
     private float _dragYOffset = 1f;
     private bool _isFitting = false;
 
-    [SerializeField] private BlockHelper blockHelper;
+    public BlockHelper BlockHelper;
     [SerializeField] private Collider2D[] blockColliders;
 
     public static event UnityAction<CellItem, Directions> OnBlockPlaced; 
@@ -30,12 +30,12 @@ public class BlockController : MonoBehaviour
 
     private void OnMouseDrag()
     {
-        if (_isDragging && blockHelper.ItemToPlace)
+        if (_isDragging && BlockHelper.ItemToPlace)
         {
-            _isFitting = CanFit(blockHelper.ItemToPlace);
-            if (CanFit(blockHelper.ItemToPlace))
+            _isFitting = CanFit(BlockHelper.ItemToPlace);
+            if (CanFit(BlockHelper.ItemToPlace))
             {
-                blockHelper.ItemToPlace.HighlightEdge(blockHelper.BlockDirections);
+                BlockHelper.ItemToPlace.HighlightEdge(BlockHelper.BlockDirections);
             }
         }
         else
@@ -48,14 +48,14 @@ public class BlockController : MonoBehaviour
     {
         _isDragging = false;
         
-        if (blockHelper.CanPlace && !_isFitting)
+        if (BlockHelper.CanPlace && !_isFitting)
         {
-            blockHelper.ItemToPlace.ResetEdges();
+            BlockHelper.ItemToPlace.ResetEdges();
         }
         
-        if (blockHelper.CanPlace && _isFitting)
+        if (BlockHelper.CanPlace && _isFitting)
         {
-            PlaceBlock(blockHelper.ItemToPlace);
+            PlaceBlock(BlockHelper.ItemToPlace);
             return;
         }
 
@@ -67,52 +67,52 @@ public class BlockController : MonoBehaviour
         if (item == null)
             return false;
 
-        if (blockHelper.BlockDirections.HasOnlyOneSide)
+        if (BlockHelper.BlockDirections.HasOnlyOneSide)
         {
             Vector3 localItemPosition = transform.InverseTransformPoint(item.transform.position);
             
-            if (blockHelper.BlockDirections.Left || blockHelper.BlockDirections.Right &&
-                !blockHelper.BlockDirections.Up && !blockHelper.BlockDirections.Down)
+            if (BlockHelper.BlockDirections.Left || BlockHelper.BlockDirections.Right &&
+                !BlockHelper.BlockDirections.Up && !BlockHelper.BlockDirections.Down)
             {
                 if (localItemPosition.x > 0 && !item.CellDirections.Left) //Left
                 {
                     item.ResetEdges();
-                    blockHelper.BlockDirections.Right = false;
-                    blockHelper.BlockDirections.Left = true;
-                    item.HighlightEdge(blockHelper.BlockDirections);
+                    BlockHelper.BlockDirections.Right = false;
+                    BlockHelper.BlockDirections.Left = true;
+                    item.HighlightEdge(BlockHelper.BlockDirections);
                 }
                 else if (localItemPosition.x < 0 && !item.CellDirections.Right) //Right
                 {
                     item.ResetEdges();
-                    blockHelper.BlockDirections.Right = true;
-                    blockHelper.BlockDirections.Left = false;
-                    item.HighlightEdge(blockHelper.BlockDirections);
+                    BlockHelper.BlockDirections.Right = true;
+                    BlockHelper.BlockDirections.Left = false;
+                    item.HighlightEdge(BlockHelper.BlockDirections);
                 }
             }
-            else if (blockHelper.BlockDirections.Up || blockHelper.BlockDirections.Down &&
-                     !blockHelper.BlockDirections.Left && !blockHelper.BlockDirections.Right)
+            else if (BlockHelper.BlockDirections.Up || BlockHelper.BlockDirections.Down &&
+                     !BlockHelper.BlockDirections.Left && !BlockHelper.BlockDirections.Right)
             {
                 if (localItemPosition.y > 0 && !item.CellDirections.Down) //Up
                 {
                     item.ResetEdges();
-                    blockHelper.BlockDirections.Up = false;
-                    blockHelper.BlockDirections.Down = true;
-                    item.HighlightEdge(blockHelper.BlockDirections);
+                    BlockHelper.BlockDirections.Up = false;
+                    BlockHelper.BlockDirections.Down = true;
+                    item.HighlightEdge(BlockHelper.BlockDirections);
                 }
                 else if (localItemPosition.y < 0 && !item.CellDirections.Up) //Down
                 {
                     item.ResetEdges();
-                    blockHelper.BlockDirections.Up = true;
-                    blockHelper.BlockDirections.Down = false;
-                    item.HighlightEdge(blockHelper.BlockDirections);
+                    BlockHelper.BlockDirections.Up = true;
+                    BlockHelper.BlockDirections.Down = false;
+                    item.HighlightEdge(BlockHelper.BlockDirections);
                 }
             }
         }
         
-        if ((blockHelper.BlockDirections.Up && item.CellDirections.Up) ||
-            (blockHelper.BlockDirections.Down && item.CellDirections.Down) ||
-            (blockHelper.BlockDirections.Right && item.CellDirections.Right) ||
-            (blockHelper.BlockDirections.Left && item.CellDirections.Left))
+        if ((BlockHelper.BlockDirections.Up && item.CellDirections.Up) ||
+            (BlockHelper.BlockDirections.Down && item.CellDirections.Down) ||
+            (BlockHelper.BlockDirections.Right && item.CellDirections.Right) ||
+            (BlockHelper.BlockDirections.Left && item.CellDirections.Left))
         {
             return false; 
         }
@@ -120,12 +120,33 @@ public class BlockController : MonoBehaviour
         return true; 
     }
 
+    public bool CanFitForOneSided(CellItem item)
+    {
+        if (BlockHelper.BlockDirections.Right && BlockHelper.BlockDirections.Left)
+        {
+            if (!item.CellDirections.Right || !item.CellDirections.Left)
+            {
+                return true;
+            }
+        }
+        
+        if (BlockHelper.BlockDirections.Up && BlockHelper.BlockDirections.Down)
+        {
+            if (!item.CellDirections.Up || !item.CellDirections.Down)
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
     private void PlaceBlock(CellItem item)
     {
         DisableColliders();
-        if (blockHelper.BlockDirections.HasOnlyOneSide)
+        if (BlockHelper.BlockDirections.HasOnlyOneSide)
         {
-            transform.DOMove(item.GetEdgeItemByDirection(blockHelper.BlockDirections).transform.position, 0.5f)
+            transform.DOMove(item.GetEdgeItemByDirection(BlockHelper.BlockDirections).transform.position, 0.25f)
                 .SetEase(Ease.OutBack).OnComplete(() =>
                 {
                     transform.SetParent(item.transform);
@@ -134,7 +155,7 @@ public class BlockController : MonoBehaviour
         }
         else
         {
-            transform.DOMove(item.transform.position, 0.5f).SetEase(Ease.OutBack).OnComplete(() =>
+            transform.DOMove(item.transform.position, 0.25f).SetEase(Ease.OutBack).OnComplete(() =>
             {
                 transform.SetParent(item.transform);
             });
@@ -143,9 +164,9 @@ public class BlockController : MonoBehaviour
         item.ResetEdges();
         OnBlockUsed?.Invoke();
         
-        DOVirtual.DelayedCall(0.5f, () =>
+        DOVirtual.DelayedCall(0.26f, () =>
         {
-            OnBlockPlaced?.Invoke(item, blockHelper.BlockDirections);
+            OnBlockPlaced?.Invoke(item, BlockHelper.BlockDirections);
             Destroy(gameObject);
         });
 

@@ -3,10 +3,12 @@ using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening;
 using UnityEngine;
+using UnityEngine.Events;
 using Random = UnityEngine.Random;
 
-public class BloksPanel : MonoBehaviour
+public class BlocksPanel : MonoBehaviour
 {
+    public List<BlockController> SpawnedBlocks = new List<BlockController>();
     public GameBuildData data; // temporary it will get from levelmanager
 
     [SerializeField] private Transform[] blockPlaces; 
@@ -26,6 +28,7 @@ public class BloksPanel : MonoBehaviour
 
     private void SpawnBlocks(bool animate)
     {
+        SpawnedBlocks.Clear();
         for (int i = 0; i < 3; i++)
         {
             var blockToSpawn = _availableBlocks[Random.Range(0, _availableBlocks.Length)];
@@ -39,6 +42,7 @@ public class BloksPanel : MonoBehaviour
             {
                 spawnedBlock.transform.DOPunchScale(Vector3.one * 0.1f, 0.3f, 0, 0.3f);
             }
+            SpawnedBlocks.Add(spawnedBlock.GetComponent<BlockController>());
         }
     }
 

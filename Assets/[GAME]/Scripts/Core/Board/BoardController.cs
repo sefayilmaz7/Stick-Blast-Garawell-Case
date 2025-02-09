@@ -8,12 +8,20 @@ using Grid = GarawellGames.Core.Grid;
 public class BoardController : MonoBehaviour
 {
     public static event UnityAction OnRowOrColumnCleared;
+    public static event UnityAction OnBoardProcessDone;
     
     private Grid _grid;
 
     private void Start()
     {
         _grid = GameBuilder.Instance.GetGrid();
+    }
+
+    private void CheckRowAndColumns()
+    {
+        CheckRows();
+        CheckColumns();
+        OnBoardProcessDone?.Invoke();
     }
 
     private void CheckColumns()
@@ -42,13 +50,11 @@ public class BoardController : MonoBehaviour
 
     private void OnEnable()
     {
-        CellItem.OnBlockProcessDone += CheckColumns;
-        CellItem.OnBlockProcessDone += CheckRows;
+        CellItem.OnBlockProcessDone += CheckRowAndColumns;
     }
 
     private void OnDisable()
     {
-        CellItem.OnBlockProcessDone -= CheckColumns;
-        CellItem.OnBlockProcessDone -= CheckRows;
+        CellItem.OnBlockProcessDone -= CheckRowAndColumns;
     }
 }

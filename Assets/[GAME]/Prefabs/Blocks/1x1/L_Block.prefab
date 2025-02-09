@@ -251,7 +251,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5c4d4d1eac97f2749a9a8a5d594b7cd5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  blockHelper: {fileID: 1777944729823235694}
+  BlockHelper: {fileID: 1777944729823235694}
   blockColliders:
   - {fileID: 1885626409955422612}
   - {fileID: 8611960736168885875}

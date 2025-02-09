@@ -119,7 +119,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5c4d4d1eac97f2749a9a8a5d594b7cd5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  blockHelper: {fileID: 3363686855875139519}
+  BlockHelper: {fileID: 3363686855875139519}
   blockColliders:
   - {fileID: 4480517700159094330}
 --- !u!1 &6962996437073374977

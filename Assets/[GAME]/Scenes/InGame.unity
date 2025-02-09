@@ -1675,7 +1675,7 @@ MonoBehaviour:
   m_MinValue: 0
   m_MaxValue: 1
   m_WholeNumbers: 0
-  m_Value: 0.493
+  m_Value: 0
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -1893,6 +1893,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 999d7a8d05223cd468f4662fa0ad8b6a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  blocksPanel: {fileID: 2051707636}
 --- !u!4 &1423193634
 Transform:
   m_ObjectHideFlags: 0
@@ -2640,6 +2641,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 030c6b5a753cb41439639b6d7a72c739, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  SpawnedBlocks: []
   data: {fileID: 11400000, guid: 73e0db6ebc9b7d74eb6813cf234a50f8, type: 2}
   blockPlaces:
   - {fileID: 971759829}
