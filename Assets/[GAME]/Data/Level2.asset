@@ -10,15 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a43db42d5a688564dbe5437ac5eab315, type: 3}
-  m_Name: Level1
+  m_Name: Level2
   m_EditorClassIdentifier: 
   CellItem: {fileID: 4164021621785232859, guid: be76a68029034144a97a42291470385c, type: 3}
   Width: 4
-  Height: 5
-  TargetType: 0
-  TargetAmount: 100
-  TargetSprite: {fileID: 21300000, guid: b5a330461f38b3145b01dd9b57031892, type: 3}
-  BlockColorForLevel: {r: 1, g: 0.50728744, b: 0, a: 1}
+  Height: 6
+  TargetType: 1
+  TargetAmount: 3
+  TargetSprite: {fileID: 21300000, guid: 1fec6d11f3c6f574ca2382a8fc2d9545, type: 3}
+  BlockColorForLevel: {r: 0.49481034, g: 1, b: 0, a: 1}
   LevelBlocks:
   - {fileID: 3363686855875139519, guid: 1eb5a0340eddfb642b6b38bdabac0c29, type: 3}
   - {fileID: 1777944729823235694, guid: fd8ef8b21be637d4db1c54afffab4bbb, type: 3}

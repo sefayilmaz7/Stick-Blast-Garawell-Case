@@ -10,6 +10,8 @@ public class InGameUIManager : Singleton<InGameUIManager>
 {
     [SerializeField] private GameBuildData data; // temp
 
+    [SerializeField] private CanvasGroup succesPanel;
+    [SerializeField] private CanvasGroup failPanel;
     [SerializeField] private Image targetImage;
     [SerializeField] private TMP_Text targetText;
     [SerializeField] private Slider targetSlider;

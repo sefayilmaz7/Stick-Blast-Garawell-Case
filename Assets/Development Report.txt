@@ -8,3 +8,6 @@ Day 2: I prepared the prefabs and classes for the blocks to be placed. I complet
  
  Day 3: I completed the code for the scenarios that will occur when all the rows and columns are filled according to the cells filled on the grid. 
  I also added the score gaining and incrementing system. I also prepared game sfx system and added required sound effect files.
+ 
+ Day 4: I added some effects and SFX for game mechanics. And I also added LevelManager class for managing levels and their data. With level manager
+ i made level data system more complicated.I added target types  and their references to grid items. I also made changes on filling row and column mechanics.

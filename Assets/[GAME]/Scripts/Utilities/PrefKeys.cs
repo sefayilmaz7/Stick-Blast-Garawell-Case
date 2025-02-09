@@ -1,6 +1,5 @@
 public static class PrefKeys
 {
-    public static readonly string PLAYER_CURRENCY = "PLAYER_CURRENCY";
     public static readonly string PLAYER_LEVEL = "PLAYER_LEVEL";
 }
 
