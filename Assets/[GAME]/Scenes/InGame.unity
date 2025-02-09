@@ -1786,7 +1786,7 @@ MonoBehaviour:
   offset: 1
   yOffset: 0
   shakeDuration: 0.2
-  shakeMagnitude: 0.15
+  shakeMagnitude: 0.12
 --- !u!1 &1207646971
 GameObject:
   m_ObjectHideFlags: 0

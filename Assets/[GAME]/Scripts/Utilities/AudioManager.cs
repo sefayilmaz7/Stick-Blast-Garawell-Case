@@ -45,7 +45,8 @@ namespace GarawellGames.Managers
             ROW_COLUMN_FILLED,
             SUCCES,
             FAIL,
-            BUTTON_CLICK
+            BUTTON_CLICK,
+            SPAWN_BLOCK
         }
     }
 

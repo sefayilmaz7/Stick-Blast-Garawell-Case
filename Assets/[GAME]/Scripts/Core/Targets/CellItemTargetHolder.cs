@@ -29,9 +29,6 @@ public class CellItemTargetHolder : MonoBehaviour
 
     public void SpawnTargetItem()
     {
-        /*if (HasTargetItem || _currentTargetType == TargetItem.TargetType.Score)
-            return;*/
-
         HasTargetItem = true;
         targetItemSprite.transform.DOScale(0.5f, 0.2f);
     }
@@ -40,6 +37,7 @@ public class CellItemTargetHolder : MonoBehaviour
     {
         if (_currentTargetType == TargetItem.TargetType.Score)
         {
+            InGameUIManager.Instance.DecreaseTarget();
             OnTargetEarned?.Invoke(TargetItem.TargetType.Score);
         }
         else if (_currentTargetType != TargetItem.TargetType.Score && HasTargetItem)

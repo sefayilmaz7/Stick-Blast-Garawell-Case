@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using GarawellGames.Core;
+using GarawellGames.Managers;
 using UnityEngine;
 using Grid = GarawellGames.Core.Grid;
 using Random = UnityEngine.Random;
@@ -18,6 +19,7 @@ public class CameraController : MonoBehaviour
     
     public IEnumerator Shake()
     {
+        AudioManager.Instance.PlayAnySound(AudioManager.SoundType.ROW_COLUMN_FILLED);
         Vector3 originalPosition = transform.localPosition;
         float elapsed = 0f;
 

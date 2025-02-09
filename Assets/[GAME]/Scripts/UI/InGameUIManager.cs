@@ -71,7 +71,7 @@ public class InGameUIManager : Singleton<InGameUIManager>
         spriteRenderer.transform.DOLocalMove(targetWorldPos, 0.3f).SetEase(Ease.InOutQuad);
     }
     
-    private void DecreaseTarget()
+    public void DecreaseTarget()
     {
         int currentValue = int.Parse(targetText.text);
         currentValue = Mathf.Max(0, currentValue - 1);

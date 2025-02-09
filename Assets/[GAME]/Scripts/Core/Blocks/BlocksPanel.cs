@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening;
+using GarawellGames.Managers;
 using UnityEngine;
 using UnityEngine.Events;
 using Random = UnityEngine.Random;
@@ -41,6 +42,7 @@ public class BlocksPanel : MonoBehaviour
 
             if (animate)
             {
+                AudioManager.Instance.PlayAnySound(AudioManager.SoundType.SPAWN_BLOCK);
                 spawnedBlock.transform.DOPunchScale(Vector3.one * 0.1f, 0.3f, 0, 0.3f);
             }
             SpawnedBlocks.Add(spawnedBlock.GetComponent<BlockController>());
