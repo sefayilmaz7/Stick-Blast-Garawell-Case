@@ -11,3 +11,7 @@ Day 2: I prepared the prefabs and classes for the blocks to be placed. I complet
  
  Day 4: I added some effects and SFX for game mechanics. And I also added LevelManager class for managing levels and their data. With level manager
  i made level data system more complicated.I added target types  and their references to grid items. I also made changes on filling row and column mechanics.
+ I created some effects for filling cells and row-columns.
+ 
+ Day 5: I completed the whole game cycle starting from splash to game scene. Updated and polished mechanics. Refactored some of the classes.
+ And i built an apk file for getting ready to case project.
