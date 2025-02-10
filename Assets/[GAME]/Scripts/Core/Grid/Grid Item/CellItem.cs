@@ -414,7 +414,6 @@ public class CellItem : ItemBase
         {
             if (leftCell.GetItem() is CellItem leftItem)
             {
-                Debug.Log("Left Cell Clearing!"*Colorize.Orange);
                 leftItem.CellDirections.Right = false;
                 leftItem.UnFillItem();
                 leftItem.RightEdge.ResetEdge();
