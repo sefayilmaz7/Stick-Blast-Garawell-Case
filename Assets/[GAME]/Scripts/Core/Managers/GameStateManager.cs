@@ -5,74 +5,77 @@ using UnityEngine;
 using UnityEngine.Events;
 using Grid = GarawellGames.Core.Grid;
 
-public class GameStateManager : Singleton<GameStateManager>
+namespace GarawellGames.Managers
 {
-    public static event UnityAction OnLevelSucces;
-    public static event UnityAction OnLevelFailed;
-
-    [SerializeField] private BlocksPanel blocksPanel;
-
-    private Grid _grid;
-
-    private bool _isSucces = false;
-    private bool _isFail = false;
-
-    private void Start()
+    public class GameStateManager : Singleton<GameStateManager>
     {
-        _grid = GameBuilder.Instance.GetGrid();
-    }
+        public static event UnityAction OnLevelSucces;
+        public static event UnityAction OnLevelFailed;
 
-    private void CheckGameFail()
-    {
-        if (_isFail)
-            return;
+        [SerializeField] private BlocksPanel blocksPanel;
 
-        foreach (var block in blocksPanel.SpawnedBlocks)
+        private Grid _grid;
+
+        private bool _isSucces = false;
+        private bool _isFail = false;
+
+        private void Start()
         {
-            if (block == null)
-            {
-                continue;
-            }
-
-            foreach (var item in _grid.GetAllItems())
-            {
-                if (item is CellItem cellItem && block.BlockHelper.BlockDirections.HasOnlyOneSide)
-                {
-                    if (block.CanFitForOneSided(cellItem))
-                    {
-                        return;
-                    }
-                }
-                else if (item is CellItem cellItemm && !block.BlockHelper.BlockDirections.HasOnlyOneSide)
-                {
-                    if (block.CanFit(cellItemm))
-                    {
-                        return;
-                    }
-                }
-            }
+            _grid = GameBuilder.Instance.GetGrid();
         }
 
-        _isFail = true;
-        OnLevelFailed?.Invoke();
-    }
+        private void CheckGameFail()
+        {
+            if (_isFail)
+                return;
 
-    public void InvokeGameSucces()
-    {
-        if (_isSucces)
-            return;
+            foreach (var block in blocksPanel.SpawnedBlocks)
+            {
+                if (block == null)
+                {
+                    continue;
+                }
 
-        _isSucces = true;
-        OnLevelSucces?.Invoke();
-    }
+                foreach (var item in _grid.GetAllItems())
+                {
+                    if (item is CellItem cellItem && block.BlockHelper.BlockDirections.HasOnlyOneSide)
+                    {
+                        if (block.CanFitForOneSided(cellItem))
+                        {
+                            return;
+                        }
+                    }
+                    else if (item is CellItem cellItemm && !block.BlockHelper.BlockDirections.HasOnlyOneSide)
+                    {
+                        if (block.CanFit(cellItemm))
+                        {
+                            return;
+                        }
+                    }
+                }
+            }
 
-    private void OnEnable()
-    {
-        BoardController.OnBoardProcessDone += CheckGameFail;
-    }
+            _isFail = true;
+            OnLevelFailed?.Invoke();
+        }
 
-    private void OnDisable()
-    {
-        BoardController.OnBoardProcessDone -= CheckGameFail;
+        public void InvokeGameSucces()
+        {
+            if (_isSucces)
+                return;
+
+            _isSucces = true;
+            OnLevelSucces?.Invoke();
+        }
+
+        private void OnEnable()
+        {
+            BoardController.OnBoardProcessDone += CheckGameFail;
+        }
+
+        private void OnDisable()
+        {
+            BoardController.OnBoardProcessDone -= CheckGameFail;
+        }
     }
 }

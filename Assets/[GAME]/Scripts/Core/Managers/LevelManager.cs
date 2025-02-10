@@ -2,40 +2,44 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class LevelManager : Singleton<LevelManager>
+namespace GarawellGames.Managers
 {
-    public int CurrentLevel = 1;
-    
-    [SerializeField] private List<GameBuildData> allLevels = new List<GameBuildData>();
-
-    protected override void AwakeSingleton()
+    public class LevelManager : Singleton<LevelManager>
     {
-        base.AwakeSingleton();
-        GetCurrentLevel();
-    }
+        public int CurrentLevel = 1;
 
-    private void GetCurrentLevel()
-    {
-        if (PlayerPrefs.HasKey(PrefKeys.PLAYER_LEVEL))
+        [SerializeField] private List<GameBuildData> allLevels = new List<GameBuildData>();
+
+        protected override void AwakeSingleton()
         {
-            CurrentLevel = PlayerPrefs.GetInt(PrefKeys.PLAYER_LEVEL);
+            base.AwakeSingleton();
+            GetCurrentLevel();
         }
-        else
+
+        private void GetCurrentLevel()
         {
-            PlayerPrefs.SetInt(PrefKeys.PLAYER_LEVEL, 1);
+            if (PlayerPrefs.HasKey(PrefKeys.PLAYER_LEVEL))
+            {
+                CurrentLevel = PlayerPrefs.GetInt(PrefKeys.PLAYER_LEVEL);
+            }
+            else
+            {
+                PlayerPrefs.SetInt(PrefKeys.PLAYER_LEVEL, 1);
+            }
+        }
+
+        public void LevelUp()
+        {
+            CurrentLevel++;
+            PlayerPrefs.SetInt(PrefKeys.PLAYER_LEVEL, CurrentLevel);
+        }
+
+        public GameBuildData GetLevelData()
+        {
+            GameBuildData currentData = allLevels[CurrentLevel - 1];
+
+            return currentData == null ? allLevels[Random.Range(0, allLevels.Count - 1)] : currentData;
         }
     }
 
-    public void LevelUp()
-    {
-        CurrentLevel++;
-        PlayerPrefs.SetInt(PrefKeys.PLAYER_LEVEL, CurrentLevel);
-    }
-
-    public GameBuildData GetLevelData()
-    {
-        GameBuildData currentData = allLevels[CurrentLevel - 1];
-        
-        return currentData == null ? allLevels[Random.Range(0,allLevels.Count -1)] : currentData;
-    }
 }

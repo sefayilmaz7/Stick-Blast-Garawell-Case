@@ -3,13 +3,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ColorManager : Singleton<ColorManager>
+namespace GarawellGames.Managers
 {
-    public Color LevelColor;
-
-    private void Start()
+    public class ColorManager : Singleton<ColorManager>
     {
-        
-        LevelColor = LevelManager.Instance.GetLevelData().BlockColorForLevel;
+        public Color LevelColor;
+
+        private void Start()
+        {
+
+            LevelColor = LevelManager.Instance.GetLevelData().BlockColorForLevel;
+        }
     }
 }

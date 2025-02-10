@@ -10,6 +10,7 @@ namespace GarawellGames.Managers
 
         private void OnEnable()
         {
+            Application.targetFrameRate = 180;
             UpdateGameState(GameState.Splash);
         }
 
