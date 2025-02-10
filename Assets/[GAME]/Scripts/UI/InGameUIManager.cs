@@ -70,7 +70,7 @@ namespace GarawellGames.Managers
 
             targetWorldPos = Camera.main.ScreenToWorldPoint(targetWorldPos);
 
-            spriteRenderer.transform.DOScale(0, 0.5f);
+            spriteRenderer.transform.DOScale(0.2f, 0.5f);
             spriteRenderer.transform.DOLocalMove(targetWorldPos, 0.3f).SetEase(Ease.InOutQuad);
         }
 
