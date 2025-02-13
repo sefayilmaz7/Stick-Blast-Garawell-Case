@@ -13,8 +13,8 @@ public class BlocksPanel : MonoBehaviour
 {
     public List<BlockController> SpawnedBlocks = new List<BlockController>();
 
-    [SerializeField] private Transform[] blockPlaces; 
-    
+    [SerializeField] private Transform[] blockPlaces;
+
     private BlockHelper[] _availableBlocks;
     private int _activeBlockCount = 3;
     private GameBuildData _data;
@@ -36,11 +36,13 @@ public class BlocksPanel : MonoBehaviour
     {
         SpawnedBlocks.Clear();
         var possibleBlocks = GetRandomPossibleBlocks();
-        
+
         for (int i = 0; i < 3; i++)
         {
             var blockToSpawn = possibleBlocks[Random.Range(0, possibleBlocks.Count)].BlockHelper;
-            var spawnedBlock = Instantiate(blockToSpawn, blockPlaces[i].position + new Vector3(blockToSpawn.PlacingOffset.x, blockToSpawn.PlacingOffset.y), blockToSpawn.transform.rotation, blockPlaces[i]);
+            var spawnedBlock = Instantiate(blockToSpawn,
+                blockPlaces[i].position + new Vector3(blockToSpawn.PlacingOffset.x, blockToSpawn.PlacingOffset.y),
+                blockToSpawn.transform.rotation, blockPlaces[i]);
             foreach (var sprite in spawnedBlock.BlockSprites)
             {
                 sprite.color = _data.BlockColorForLevel;
@@ -51,6 +53,7 @@ public class BlocksPanel : MonoBehaviour
                 AudioManager.Instance.PlayAnySound(AudioManager.SoundType.SPAWN_BLOCK);
                 spawnedBlock.transform.DOPunchScale(Vector3.one * 0.1f, 0.3f, 0, 0.3f);
             }
+
             SpawnedBlocks.Add(spawnedBlock.GetComponent<BlockController>());
         }
     }
@@ -76,6 +79,7 @@ public class BlocksPanel : MonoBehaviour
             {
                 possibleRandomBlocks.Add(helper.Controller);
             }
+
             return possibleRandomBlocks; //  Return default 
         }
 
@@ -96,13 +100,17 @@ public class BlocksPanel : MonoBehaviour
     private BlockHelper GetRandomAvailableBlockByDirection(Directions directions)
     {
         var validBlocks = _availableBlocks
-            .Where(block => 
+            .Where(block =>
                 block.BlockDirections.HasOnlyOneSide
-                    ? ( 
-                        (block.BlockDirections.Right || block.BlockDirections.Left) || 
-                        (block.BlockDirections.Up || block.BlockDirections.Down)  
+                    ? (
+                        (block.BlockDirections.Right && block.BlockDirections.Left)
+                            ? (!directions.Right || !directions.Left)
+                            // ReSharper disable once SimplifyConditionalTernaryExpression
+                            : (block.BlockDirections.Up && block.BlockDirections.Down)
+                                ? (!directions.Up || !directions.Down)
+                                : false
                     )
-                    : ( 
+                    : (
                         (block.BlockDirections.Up ? !directions.Up : true) &&
                         (block.BlockDirections.Down ? !directions.Down : true) &&
                         (block.BlockDirections.Left ? !directions.Left : true) &&
@@ -117,19 +125,9 @@ public class BlocksPanel : MonoBehaviour
             return null;
         }
         
-        ShuffleList(validBlocks);
-        return validBlocks[0];
+        return validBlocks[Random.Range(0,validBlocks.Count)];
     }
-    
-    // Fisher-Yates Shuffle 
-    private void ShuffleList<T>(List<T> list)
-    {
-        for (int i = list.Count - 1; i > 0; i--)
-        {
-            int randomIndex = Random.Range(0, i + 1);
-            (list[i], list[randomIndex]) = (list[randomIndex], list[i]); 
-        }
-    }
+
 
     private void OnEnable()
     {
