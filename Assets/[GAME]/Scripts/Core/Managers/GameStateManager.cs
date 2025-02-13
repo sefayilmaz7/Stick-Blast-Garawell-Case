@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.Events;
 using Grid = GarawellGames.Core.Grid;
@@ -24,9 +25,20 @@ namespace GarawellGames.Managers
             _grid = GameBuilder.Instance.GetGrid();
         }
 
+        private void Update()
+        {
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                CheckGameFail();
+            }
+        }
+
         private void CheckGameFail()
         {
             if (_isFail)
+                return;
+            
+            if (blocksPanel.SpawnedBlocks == null || blocksPanel.SpawnedBlocks.Count == 0 || blocksPanel.SpawnedBlocks.All(b => b == null))
                 return;
 
             foreach (var block in blocksPanel.SpawnedBlocks)
@@ -40,7 +52,7 @@ namespace GarawellGames.Managers
                 {
                     if (item is CellItem cellItem && block.BlockHelper.BlockDirections.HasOnlyOneSide)
                     {
-                        if (block.CanFitForOneSided(cellItem))
+                        if (block == null || block.CanFitForOneSided(cellItem))
                         {
                             return;
                         }

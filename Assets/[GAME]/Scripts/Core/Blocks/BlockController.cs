@@ -131,7 +131,7 @@ public class BlockController : MonoBehaviour
 
     public bool CanFitForOneSided(CellItem item)
     {
-        if (BlockHelper.BlockDirections.Right && BlockHelper.BlockDirections.Left)
+        if (BlockHelper.BlockDirections.Right || BlockHelper.BlockDirections.Left)
         {
             if (!item.CellDirections.Right || !item.CellDirections.Left)
             {
@@ -139,7 +139,7 @@ public class BlockController : MonoBehaviour
             }
         }
 
-        if (BlockHelper.BlockDirections.Up && BlockHelper.BlockDirections.Down)
+        if (BlockHelper.BlockDirections.Up || BlockHelper.BlockDirections.Down)
         {
             if (!item.CellDirections.Up || !item.CellDirections.Down)
             {
