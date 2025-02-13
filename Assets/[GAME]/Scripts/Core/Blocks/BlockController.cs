@@ -14,6 +14,8 @@ public class BlockController : MonoBehaviour
     private bool _isFitting = false;
     private bool _canGetInput = true;
     private Vector3 _dragOffset;
+    private float _smoothTime = 0.05f; 
+    private Vector3 _velocity = Vector3.zero;
 
     public BlockHelper BlockHelper;
     [SerializeField] private Collider2D[] blockColliders;
@@ -33,8 +35,9 @@ public class BlockController : MonoBehaviour
             return;
         
         AudioManager.Instance.PlayAnySound(AudioManager.SoundType.BLOCK_SELECT);
+        Vector3 mousePosition = GetMouseWorldPosition();
+        _dragOffset = transform.position - mousePosition;
         _isDragging = true;
-        _dragOffset = transform.position - GetMouseWorldPosition(); 
     }
 
     private void OnMouseDrag()
@@ -194,19 +197,21 @@ public class BlockController : MonoBehaviour
         if (_isDragging)
         {
             Vector3 mousePosition = GetMouseWorldPosition();
-            transform.position = new Vector3(
+            Vector3 targetPosition = new Vector3(
                 mousePosition.x + _dragOffset.x, 
-                mousePosition.y + _dragYOffset, 
-                transform.position.z 
+                mousePosition.y + _dragOffset.y, 
+                transform.position.z
             );
+            
+            transform.position = Vector3.SmoothDamp(transform.position, targetPosition, ref _velocity, _smoothTime);
         }
     }
 
     private Vector3 GetMouseWorldPosition()
     {
-        Vector3 mouseScreenPos = Input.mousePosition;
-        mouseScreenPos.z = Camera.main.WorldToScreenPoint(transform.position).z;
-        return Camera.main.ScreenToWorldPoint(mouseScreenPos);
+        Vector3 mouseScreenPosition = Input.mousePosition;
+        mouseScreenPosition.z = Camera.main.WorldToScreenPoint(transform.position).z; 
+        return Camera.main.ScreenToWorldPoint(mouseScreenPosition);
     }
 
     private void DisableInput()
