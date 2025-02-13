@@ -88,6 +88,24 @@ namespace GarawellGames.Core
 
             return items;
         }
+        
+        public List<CellItem> GetTotallyEmptyItems()
+        {
+            List<CellItem> items = new List<CellItem>();
+
+            foreach (var cell in GetAllCells())
+            {
+                if (cell.HasItem() && cell.GetItem() is CellItem cellItem && !cellItem.IsFilled)
+                {
+                    if (!cellItem.CellDirections.Up && !cellItem.CellDirections.Down && !cellItem.CellDirections.Right && !cellItem.CellDirections.Left)
+                    {
+                        items.Add(cellItem);
+                    }
+                }
+            }
+
+            return items;
+        }
 
         public List<Cell> GetAllNeighbours(Cell cell, bool includeCrossNeighbours = true)
         {

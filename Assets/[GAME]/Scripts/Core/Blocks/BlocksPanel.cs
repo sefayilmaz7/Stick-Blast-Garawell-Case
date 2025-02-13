@@ -71,7 +71,17 @@ public class BlocksPanel : MonoBehaviour
     private List<BlockController> GetRandomPossibleBlocks()
     {
         List<BlockController> possibleRandomBlocks = new List<BlockController>();
-        List<CellItem> unfilledCells = _grid.GetUnFilledItems();
+        List<CellItem> unfilledCells;
+        // If we have totally empty items, get them 
+        if (_grid.GetTotallyEmptyItems().Count == 0)
+        {
+            unfilledCells = _grid.GetUnFilledItems();
+        }
+        else
+        {
+            unfilledCells = _grid.GetTotallyEmptyItems();
+        }
+        
 
         if (unfilledCells == null || unfilledCells.Count == 0)
         {
@@ -121,7 +131,7 @@ public class BlocksPanel : MonoBehaviour
 
         if (validBlocks.Count == 0)
         {
-            Debug.LogWarning("No valid blocks found for given directions!");
+            Debug.LogWarning("No valid blocks found");
             return null;
         }
         
