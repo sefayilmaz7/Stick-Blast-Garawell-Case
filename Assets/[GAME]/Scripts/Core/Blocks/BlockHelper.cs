@@ -50,17 +50,13 @@ public class BlockHelper : MonoBehaviour
     {
         if (blockCollider == null)
             return;
-
-        // Gizmo rengini belirle
+        
         Gizmos.color = Color.red;
-
-        // OverlapBox'ın boyutunu al
+        
         Vector2 size = new Vector2(0.7f,0.7f);
-
-        // Merkez noktasını belirle
+        
         Vector3 position = transform.position;
-
-        // Kutuyu çiz (Z rotasyonu olmadığı için sadece X ve Y kullanıyoruz)
+        
         Gizmos.DrawWireCube(position, size);
     }
 }

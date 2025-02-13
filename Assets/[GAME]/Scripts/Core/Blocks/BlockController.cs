@@ -13,6 +13,7 @@ public class BlockController : MonoBehaviour
     private float _dragYOffset = 1f;
     private bool _isFitting = false;
     private bool _canGetInput = true;
+    private Vector3 _dragOffset;
 
     public BlockHelper BlockHelper;
     [SerializeField] private Collider2D[] blockColliders;
@@ -24,14 +25,16 @@ public class BlockController : MonoBehaviour
     {
         _startPosition = transform.position;
     }
-
+    
+    
     private void OnMouseDown()
     {
         if (!_canGetInput)
             return;
-
+        
         AudioManager.Instance.PlayAnySound(AudioManager.SoundType.BLOCK_SELECT);
         _isDragging = true;
+        _dragOffset = transform.position - GetMouseWorldPosition(); 
     }
 
     private void OnMouseDrag()
@@ -191,7 +194,11 @@ public class BlockController : MonoBehaviour
         if (_isDragging)
         {
             Vector3 mousePosition = GetMouseWorldPosition();
-            transform.position = new Vector3(mousePosition.x, mousePosition.y + _dragYOffset, transform.position.z);
+            transform.position = new Vector3(
+                mousePosition.x + _dragOffset.x, 
+                mousePosition.y + _dragYOffset, 
+                transform.position.z 
+            );
         }
     }
 
