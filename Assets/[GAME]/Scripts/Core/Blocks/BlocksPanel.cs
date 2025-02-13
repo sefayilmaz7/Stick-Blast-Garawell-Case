@@ -141,11 +141,11 @@ public class BlocksPanel : MonoBehaviour
 
     private void OnEnable()
     {
-        BlockController.OnBlockUsed += CheckBlockSpawn;
+        CellItem.OnBlockFillingDone += CheckBlockSpawn;
     }
 
     private void OnDisable()
     {
-        BlockController.OnBlockUsed -= CheckBlockSpawn;
+        CellItem.OnBlockFillingDone -= CheckBlockSpawn;
     }
 }

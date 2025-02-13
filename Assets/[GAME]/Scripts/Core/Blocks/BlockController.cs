@@ -21,7 +21,6 @@ public class BlockController : MonoBehaviour
     [SerializeField] private Collider2D[] blockColliders;
 
     public static event UnityAction<CellItem, Directions> OnBlockPlaced;
-    public static event UnityAction OnBlockUsed;
 
     private void Start()
     {
@@ -175,7 +174,6 @@ public class BlockController : MonoBehaviour
         }
 
         item.ResetEdges();
-        OnBlockUsed?.Invoke();
 
         DOVirtual.DelayedCall(0.26f, () =>
         {

@@ -9,6 +9,7 @@ using Grid = GarawellGames.Core.Grid;
 public class CellItem : ItemBase
 {
     public static event UnityAction OnBlockProcessDone;
+    public static event UnityAction OnBlockFillingDone;
 
     public bool IsFilled = false;
     public Directions CellDirections;
@@ -201,6 +202,7 @@ public class CellItem : ItemBase
         {
             FillItem();
         }
+        OnBlockFillingDone?.Invoke();
 
         DOVirtual.DelayedCall(0.3f, () => OnBlockProcessDone?.Invoke());
     }
