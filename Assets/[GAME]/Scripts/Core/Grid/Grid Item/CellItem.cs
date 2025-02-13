@@ -105,13 +105,9 @@ public class CellItem : ItemBase
     private void ForceResetEdges()
     {
         DownEdge.ResetEdge();
-        DownEdge.ResetCorners();
         UpEdge.ResetEdge();
-        UpEdge.ResetCorners();
         RightEdge.ResetEdge();
-        RightEdge.ResetCorners();
         LeftEdge.ResetEdge();
-        LeftEdge.ResetCorners();
     }
 
     public void ResetEdges()
@@ -371,7 +367,6 @@ public class CellItem : ItemBase
                 upItem.CellDirections.Down = false;
                 upItem.UnFillItem();
                 upItem.DownEdge.ResetEdge();
-                upItem.DownEdge.ResetCorners();
             }
         }
     }
@@ -388,7 +383,6 @@ public class CellItem : ItemBase
                 downItem.CellDirections.Up = false;
                 downItem.UnFillItem();
                 downItem.UpEdge.ResetEdge();
-                downItem.UpEdge.ResetCorners();
             }
         }
     }
@@ -405,7 +399,6 @@ public class CellItem : ItemBase
                 rightItem.CellDirections.Left = false;
                 rightItem.UnFillItem();
                 rightItem.LeftEdge.ResetEdge();
-                rightItem.LeftEdge.ResetCorners();
             }
         }
     }
@@ -422,7 +415,6 @@ public class CellItem : ItemBase
                 leftItem.CellDirections.Right = false;
                 leftItem.UnFillItem();
                 leftItem.RightEdge.ResetEdge();
-                leftItem.RightEdge.ResetCorners();
             }
         }
     }

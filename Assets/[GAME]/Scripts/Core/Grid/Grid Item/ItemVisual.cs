@@ -17,6 +17,46 @@ namespace GarawellGames.Core
         [SerializeField] private SpriteRenderer fillSprite;
         [SerializeField] private VisualParams visualParams;
         [SerializeField] private SpriteRenderer[] _dropEffectSprites;
+        [SerializeField] private CellItem cellItem;
+
+        [SerializeField] private SpriteRenderer upLeftPin;
+        [SerializeField] private SpriteRenderer upRightPin;
+        [SerializeField] private SpriteRenderer downLeftPin;
+        [SerializeField] private SpriteRenderer downRightPin;
+
+        private void Update()
+        {
+            ColorizeCornersByDirections();
+        }
+
+        private void ColorizeCornersByDirections()
+        {
+            bool isUp = cellItem.CellDirections.Up;
+            bool isDown = cellItem.CellDirections.Down;
+            bool isLeft = cellItem.CellDirections.Left;
+            bool isRight = cellItem.CellDirections.Right;
+            
+            SetCornerColorAndOrder(upLeftPin, isUp, isLeft);
+            SetCornerColorAndOrder(upRightPin, isUp, isRight);
+            SetCornerColorAndOrder(downLeftPin, isDown, isLeft);
+            SetCornerColorAndOrder(downRightPin, isDown, isRight);
+        }
+        
+        void SetCornerColorAndOrder(SpriteRenderer pin, params bool[] conditions)
+        {
+            bool isActive = false;
+            foreach (bool condition in conditions)
+            {
+                if (condition)
+                {
+                    isActive = true;
+                    break;
+                }
+            }
+        
+            pin.sortingOrder = isActive ? 4 : 3;
+            pin.color = isActive ? DarkenColor(ColorManager.Instance.LevelColor) : visualParams.cornerDefaultColor;
+        }
 
         public void InitializeVisual(Vector2 position, Transform parent)
         {
@@ -79,6 +119,16 @@ namespace GarawellGames.Core
                     });
             }
         }
+        
+            
+        public Color DarkenColor(Color color, float darkenAmount = 0.1f)
+        {
+            float r = Mathf.Clamp01(color.r - darkenAmount);
+            float g = Mathf.Clamp01(color.g - darkenAmount);
+            float b = Mathf.Clamp01(color.b - darkenAmount);
+
+            return new Color(r, g, b, color.a);
+        }
 
 
         [Serializable]
@@ -86,6 +136,7 @@ namespace GarawellGames.Core
         {
             public float fillImageEnableTime;
             public Color lineDefaultColor;
+            public Color cornerDefaultColor;
         }
     }
 }

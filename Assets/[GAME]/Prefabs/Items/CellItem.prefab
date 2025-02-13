@@ -134,10 +134,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   edgeDefaultColor: {r: 0.427451, g: 0.34509805, b: 1, a: 1}
   edgeSelectedColor: {r: 0.36862746, g: 1, b: 0, a: 1}
-  squareDefaultColor: {r: 0.2627451, g: 0.19607843, b: 0.7254902, a: 1}
-  effectedSquares:
-  - {fileID: 2336863259742133353}
-  - {fileID: 2042368059607165300}
   CellItem: {fileID: 4164021621785232859}
   EdgeSprite: {fileID: 3301832714011360430}
 --- !u!1 &1656396037386081648
@@ -355,8 +351,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   edgeDefaultColor: {r: 0.427451, g: 0.34509805, b: 1, a: 1}
   edgeSelectedColor: {r: 0.36862746, g: 1, b: 0, a: 1}
-  squareDefaultColor: {r: 0, g: 0, b: 0, a: 0}
-  effectedSquares: []
   CellItem: {fileID: 4164021621785232859}
   EdgeSprite: {fileID: 9014118521095634002}
 --- !u!1 &3510096016057910287
@@ -542,8 +536,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   edgeDefaultColor: {r: 0.427451, g: 0.34509805, b: 1, a: 1}
   edgeSelectedColor: {r: 0.36862746, g: 1, b: 0, a: 1}
-  squareDefaultColor: {r: 0, g: 0, b: 0, a: 0}
-  effectedSquares: []
   CellItem: {fileID: 4164021621785232859}
   EdgeSprite: {fileID: 814232006604502631}
 --- !u!1 &4881651156252054864
@@ -645,10 +637,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   edgeDefaultColor: {r: 0.42745098, g: 0.34509805, b: 1, a: 1}
   edgeSelectedColor: {r: 0.36794555, g: 1, b: 0, a: 1}
-  squareDefaultColor: {r: 0.2627451, g: 0.19607843, b: 0.7254902, a: 1}
-  effectedSquares:
-  - {fileID: 2336863259742133353}
-  - {fileID: 5204791682231506082}
   CellItem: {fileID: 4164021621785232859}
   EdgeSprite: {fileID: 7943165261998292986}
 --- !u!1 &5437456370487710301
@@ -750,10 +738,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   edgeDefaultColor: {r: 0.427451, g: 0.34509805, b: 1, a: 1}
   edgeSelectedColor: {r: 0.36862746, g: 1, b: 0, a: 1}
-  squareDefaultColor: {r: 0.2627451, g: 0.19607843, b: 0.7254902, a: 1}
-  effectedSquares:
-  - {fileID: 2041798848876564523}
-  - {fileID: 2042368059607165300}
   CellItem: {fileID: 4164021621785232859}
   EdgeSprite: {fileID: 5788626472958655862}
 --- !u!1 &5874230228961962012
@@ -855,8 +839,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   edgeDefaultColor: {r: 0.427451, g: 0.34509805, b: 1, a: 1}
   edgeSelectedColor: {r: 0.36862746, g: 1, b: 0, a: 1}
-  squareDefaultColor: {r: 0, g: 0, b: 0, a: 0}
-  effectedSquares: []
   CellItem: {fileID: 4164021621785232859}
   EdgeSprite: {fileID: 1724263822593485158}
 --- !u!1 &6485854178791290282
@@ -971,11 +953,17 @@ MonoBehaviour:
   visualParams:
     fillImageEnableTime: 0.3
     lineDefaultColor: {r: 0.42745098, g: 0.34509805, b: 1, a: 1}
+    cornerDefaultColor: {r: 0.2627451, g: 0.19607843, b: 0.7254902, a: 1}
   _dropEffectSprites:
   - {fileID: 1843241346648288175}
   - {fileID: 814232006604502631}
   - {fileID: 1724263822593485158}
   - {fileID: 9014118521095634002}
+  cellItem: {fileID: 4164021621785232859}
+  upLeftPin: {fileID: 2336863259742133353}
+  upRightPin: {fileID: 5204791682231506082}
+  downLeftPin: {fileID: 2042368059607165300}
+  downRightPin: {fileID: 2041798848876564523}
 --- !u!114 &4164021621785232859
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1245,8 +1233,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   edgeDefaultColor: {r: 0.42745098, g: 0.34509805, b: 1, a: 1}
   edgeSelectedColor: {r: 0.36794555, g: 1, b: 0, a: 1}
-  squareDefaultColor: {r: 0, g: 0, b: 0, a: 0}
-  effectedSquares: []
   CellItem: {fileID: 4164021621785232859}
   EdgeSprite: {fileID: 1843241346648288175}
 --- !u!1 &7743685618053178393
@@ -1432,10 +1418,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   edgeDefaultColor: {r: 0.427451, g: 0.34509805, b: 1, a: 1}
   edgeSelectedColor: {r: 0.36862746, g: 1, b: 0, a: 1}
-  squareDefaultColor: {r: 0.2627451, g: 0.19607843, b: 0.7254902, a: 1}
-  effectedSquares:
-  - {fileID: 5204791682231506082}
-  - {fileID: 2041798848876564523}
   CellItem: {fileID: 4164021621785232859}
   EdgeSprite: {fileID: 2378121682661816896}
 --- !u!1 &7896172066156391356
