@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: Level3
   m_EditorClassIdentifier: 
   CellItem: {fileID: 4164021621785232859, guid: be76a68029034144a97a42291470385c, type: 3}
-  Width: 4
-  Height: 5
+  Width: 6
+  Height: 6
   TargetType: 2
   TargetAmount: 3
   TargetSprite: {fileID: 21300000, guid: 51749a9a796cf7848acc87683be3224d, type: 3}

@@ -12,6 +12,7 @@ public class CameraController : MonoBehaviour
     [SerializeField] private Camera camera;
     [SerializeField] private float offset = 3;
     [SerializeField] private float yOffset;
+    [SerializeField] private Transform blockHolderTransform;
 
     [Header("Camera Shake Values")] 
     [SerializeField] private float shakeDuration;
@@ -53,6 +54,17 @@ public class CameraController : MonoBehaviour
 
         camera.orthographicSize = hgt + offset;
         transform.position = new Vector3(x, y, -10);
+        
+        
+        if (camera != null)
+        {
+            float pixelsToUnits = 300f / Screen.height * (2f * camera.orthographicSize);
+            
+            float bottomY = camera.transform.position.y - camera.orthographicSize;
+            
+            blockHolderTransform.position = new Vector3(camera.transform.position.x, bottomY + pixelsToUnits, blockHolderTransform.position.z);
+        }
+    
     }
 
     private void Start()

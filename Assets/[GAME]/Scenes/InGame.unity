@@ -1785,6 +1785,7 @@ MonoBehaviour:
   camera: {fileID: 1140066375}
   offset: 1
   yOffset: 0
+  blockHolderTransform: {fileID: 2051707635}
   shakeDuration: 0.2
   shakeMagnitude: 0.12
 --- !u!1 &1207646971
@@ -2617,8 +2618,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2051707633}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.5, y: -2.48, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: -4.56, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -2652,7 +2653,7 @@ SceneRoots:
   - {fileID: 1751218707}
   - {fileID: 1513066470}
   - {fileID: 156465021}
-  - {fileID: 2051707635}
   - {fileID: 491952739}
   - {fileID: 429767380}
   - {fileID: 1423193634}
+  - {fileID: 2051707635}
