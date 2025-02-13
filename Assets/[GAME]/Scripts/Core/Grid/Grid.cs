@@ -74,6 +74,21 @@ namespace GarawellGames.Core
             return items;
         }
 
+        public List<CellItem> GetUnFilledItems()
+        {
+            List<CellItem> items = new List<CellItem>();
+
+            foreach (var cell in GetAllCells())
+            {
+                if (cell.HasItem() && cell.GetItem() is CellItem cellItem && !cellItem.IsFilled)
+                {
+                    items.Add(cellItem);
+                }
+            }
+
+            return items;
+        }
+
         public List<Cell> GetAllNeighbours(Cell cell, bool includeCrossNeighbours = true)
         {
             List<Cell> neighbours = new List<Cell>();

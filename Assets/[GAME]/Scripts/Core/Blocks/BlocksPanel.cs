@@ -1,10 +1,12 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using DG.Tweening;
 using GarawellGames.Managers;
 using UnityEngine;
 using UnityEngine.Events;
+using Grid = GarawellGames.Core.Grid;
 using Random = UnityEngine.Random;
 
 public class BlocksPanel : MonoBehaviour
@@ -16,10 +18,12 @@ public class BlocksPanel : MonoBehaviour
     private BlockHelper[] _availableBlocks;
     private int _activeBlockCount = 3;
     private GameBuildData _data;
+    private Grid _grid;
 
     private void Awake()
     {
         _data = LevelManager.Instance.GetLevelData();
+        _grid = GameBuilder.Instance.GetGrid();
         _availableBlocks = _data.LevelBlocks;
     }
 
@@ -31,9 +35,11 @@ public class BlocksPanel : MonoBehaviour
     private void SpawnBlocks(bool animate)
     {
         SpawnedBlocks.Clear();
+        var possibleBlocks = GetRandomPossibleBlocks();
+        
         for (int i = 0; i < 3; i++)
         {
-            var blockToSpawn = _availableBlocks[Random.Range(0, _availableBlocks.Length)];
+            var blockToSpawn = possibleBlocks[Random.Range(0, possibleBlocks.Count)].BlockHelper;
             var spawnedBlock = Instantiate(blockToSpawn, blockPlaces[i].position + new Vector3(blockToSpawn.PlacingOffset.x, blockToSpawn.PlacingOffset.y), blockToSpawn.transform.rotation, blockPlaces[i]);
             foreach (var sprite in spawnedBlock.BlockSprites)
             {
@@ -56,6 +62,72 @@ public class BlocksPanel : MonoBehaviour
         {
             SpawnBlocks(true);
             _activeBlockCount = 3;
+        }
+    }
+
+    private List<BlockController> GetRandomPossibleBlocks()
+    {
+        List<BlockController> possibleRandomBlocks = new List<BlockController>();
+        List<CellItem> unfilledCells = _grid.GetUnFilledItems();
+
+        if (unfilledCells == null || unfilledCells.Count == 0)
+        {
+            foreach (var helper in _availableBlocks)
+            {
+                possibleRandomBlocks.Add(helper.Controller);
+            }
+            return possibleRandomBlocks; //  Return default 
+        }
+
+        for (int i = 0; i < 3; i++)
+        {
+            CellItem randomCell = unfilledCells[Random.Range(0, unfilledCells.Count)];
+            BlockHelper selectedBlock = GetRandomAvailableBlockByDirection(randomCell.CellDirections);
+
+            if (selectedBlock != null)
+            {
+                possibleRandomBlocks.Add(selectedBlock.Controller);
+            }
+        }
+
+        return possibleRandomBlocks;
+    }
+
+    private BlockHelper GetRandomAvailableBlockByDirection(Directions directions)
+    {
+        var validBlocks = _availableBlocks
+            .Where(block => 
+                block.BlockDirections.HasOnlyOneSide
+                    ? ( 
+                        (block.BlockDirections.Right || block.BlockDirections.Left) || 
+                        (block.BlockDirections.Up || block.BlockDirections.Down)  
+                    )
+                    : ( 
+                        (block.BlockDirections.Up ? !directions.Up : true) &&
+                        (block.BlockDirections.Down ? !directions.Down : true) &&
+                        (block.BlockDirections.Left ? !directions.Left : true) &&
+                        (block.BlockDirections.Right ? !directions.Right : true)
+                    )
+            )
+            .ToList();
+
+        if (validBlocks.Count == 0)
+        {
+            Debug.LogWarning("No valid blocks found for given directions!");
+            return null;
+        }
+        
+        ShuffleList(validBlocks);
+        return validBlocks[0];
+    }
+    
+    // Fisher-Yates Shuffle 
+    private void ShuffleList<T>(List<T> list)
+    {
+        for (int i = list.Count - 1; i > 0; i--)
+        {
+            int randomIndex = Random.Range(0, i + 1);
+            (list[i], list[randomIndex]) = (list[randomIndex], list[i]); 
         }
     }
 

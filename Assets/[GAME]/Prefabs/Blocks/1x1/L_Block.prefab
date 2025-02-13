@@ -150,6 +150,7 @@ MonoBehaviour:
     Right: 0
     Left: 1
     HasOnlyOneSide: 0
+  Controller: {fileID: -4073873749671934457}
 --- !u!61 &8611960736168885875
 BoxCollider2D:
   m_ObjectHideFlags: 0

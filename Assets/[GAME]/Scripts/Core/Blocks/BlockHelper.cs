@@ -13,6 +13,7 @@ public class BlockHelper : MonoBehaviour
     public bool CanPlace;
     public CellItem ItemToPlace;
     public Directions BlockDirections;
+    public BlockController Controller;
     
     
     
