@@ -10,7 +10,7 @@ public class BlockController : MonoBehaviour
 {
     private Vector3 _startPosition;
     private bool _isDragging = false;
-    private float _dragYOffset = 1f;
+    private float _dragYOffset = 0f;
     private bool _isFitting = false;
     private bool _canGetInput = true;
     private Vector3 _dragOffset;
