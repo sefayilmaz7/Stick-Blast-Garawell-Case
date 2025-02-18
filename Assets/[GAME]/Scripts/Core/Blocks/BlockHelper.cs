@@ -14,20 +14,22 @@ public class BlockHelper : MonoBehaviour
     public CellItem ItemToPlace;
     public Directions BlockDirections;
     public BlockController Controller;
-    
-    
-    
+
+
     private void FixedUpdate()
     {
+        if (!Controller.IsDragging)
+            return;
+
         CheckPlacement();
     }
 
     private void CheckPlacement()
     {
         CanPlace = false;
-        
-        Collider2D collider = Physics2D.OverlapBox(transform.position, new Vector2(0.7f,0.7f), 0, cellItemLayerMask);
-    
+
+        Collider2D collider = Physics2D.OverlapBox(transform.position, new Vector2(0.7f, 0.7f), 0, cellItemLayerMask);
+
         if (collider != null && collider.TryGetComponent(out CellItem cellItem))
         {
             CanPlace = true;
@@ -35,6 +37,7 @@ public class BlockHelper : MonoBehaviour
             {
                 ItemToPlace.ResetEdges();
             }
+
             ItemToPlace = cellItem;
         }
         else
@@ -43,22 +46,22 @@ public class BlockHelper : MonoBehaviour
             {
                 ItemToPlace.ResetEdges();
             }
+
             ItemToPlace = null;
         }
     }
-    
+
     private void OnDrawGizmos()
     {
         if (blockCollider == null)
             return;
-        
+
         Gizmos.color = Color.red;
-        
-        Vector2 size = new Vector2(0.7f,0.7f);
-        
+
+        Vector2 size = new Vector2(0.7f, 0.7f);
+
         Vector3 position = transform.position;
-        
+
         Gizmos.DrawWireCube(position, size);
     }
 }
-

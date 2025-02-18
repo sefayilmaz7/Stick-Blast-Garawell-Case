@@ -9,8 +9,8 @@ using UnityEngine.Events;
 public class BlockController : MonoBehaviour
 {
     private Vector3 _startPosition;
-    private bool _isDragging = false;
-    private float _dragYOffset = 0f;
+    public bool IsDragging = false;
+    private float _dragYOffset = 0.5f;
     private bool _isFitting = false;
     private bool _canGetInput = true;
     private Vector3 _dragOffset;
@@ -36,12 +36,12 @@ public class BlockController : MonoBehaviour
         AudioManager.Instance.PlayAnySound(AudioManager.SoundType.BLOCK_SELECT);
         Vector3 mousePosition = GetMouseWorldPosition();
         _dragOffset = transform.position - mousePosition;
-        _isDragging = true;
+        IsDragging = true;
     }
 
     private void OnMouseDrag()
     {
-        if (_isDragging && BlockHelper.ItemToPlace)
+        if (IsDragging && BlockHelper.ItemToPlace)
         {
             _isFitting = CanFit(BlockHelper.ItemToPlace);
             if (CanFit(BlockHelper.ItemToPlace))
@@ -57,7 +57,7 @@ public class BlockController : MonoBehaviour
 
     private void OnMouseUp()
     {
-        _isDragging = false;
+        IsDragging = false;
 
         if (BlockHelper.CanPlace && !_isFitting)
         {
@@ -192,12 +192,12 @@ public class BlockController : MonoBehaviour
 
     private void Update()
     {
-        if (_isDragging)
+        if (IsDragging)
         {
             Vector3 mousePosition = GetMouseWorldPosition();
             Vector3 targetPosition = new Vector3(
                 mousePosition.x + _dragOffset.x, 
-                mousePosition.y + _dragOffset.y, 
+                mousePosition.y + _dragOffset.y + _dragYOffset, 
                 transform.position.z
             );
             
