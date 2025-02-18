@@ -28,5 +28,7 @@ public class CellItemEdge : MonoBehaviour
         EdgeSprite.sortingOrder = 1;
     }
     
+    
+    
 
 }

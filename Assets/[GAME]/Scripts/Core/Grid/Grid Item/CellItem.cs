@@ -58,7 +58,6 @@ public class CellItem : ItemBase
         UpEdge.EdgeSprite.sortingOrder = 0;
         DownEdge.EdgeSprite.sortingOrder = 0;
     }
-
     public void ClearItem()
     {
         IsFilled = false;
@@ -364,11 +363,15 @@ public class CellItem : ItemBase
         Cell upCell = grid.GetCellByCoordinates(X, Y - 1);
         if (upCell != null)
         {
-            if (upCell.GetItem() is CellItem upItem)
+            if (upCell.GetItem() is CellItem upItem && !upItem.IsFilled)
             {
                 upItem.CellDirections.Down = false;
                 upItem.UnFillItem();
                 upItem.DownEdge.ResetEdge();
+            }
+            else if(upCell.GetItem() is CellItem upItemm && upItemm.IsFilled)
+            {
+                AddDirections(new Directions(true, false, false,false));
             }
         }
     }
@@ -380,11 +383,15 @@ public class CellItem : ItemBase
         Cell downCell = grid.GetCellByCoordinates(X, Y + 1);
         if (downCell != null)
         {
-            if (downCell.GetItem() is CellItem downItem)
+            if (downCell.GetItem() is CellItem downItem && !downItem.IsFilled)
             {
                 downItem.CellDirections.Up = false;
                 downItem.UnFillItem();
                 downItem.UpEdge.ResetEdge();
+            }
+            else if (downCell.GetItem() is CellItem downItemm && downItemm.IsFilled)
+            {
+                AddDirections(new Directions(false, true, false,false));
             }
         }
     }
@@ -396,11 +403,15 @@ public class CellItem : ItemBase
         Cell rightCell = grid.GetCellByCoordinates(X+ 1, Y);
         if (rightCell != null)
         {
-            if (rightCell.GetItem() is CellItem rightItem)
+            if (rightCell.GetItem() is CellItem rightItem && !rightItem.IsFilled)
             {
                 rightItem.CellDirections.Left = false;
                 rightItem.UnFillItem();
                 rightItem.LeftEdge.ResetEdge();
+            }
+            else if (rightCell.GetItem() is CellItem rightItemm && rightItemm.IsFilled)
+            {
+                AddDirections(new Directions(false, false, true,false));
             }
         }
     }
@@ -412,11 +423,15 @@ public class CellItem : ItemBase
         Cell leftCell = grid.GetCellByCoordinates(X- 1, Y);
         if (leftCell != null)
         {
-            if (leftCell.GetItem() is CellItem leftItem)
+            if (leftCell.GetItem() is CellItem leftItem && !leftItem.IsFilled)
             {
                 leftItem.CellDirections.Right = false;
                 leftItem.UnFillItem();
                 leftItem.RightEdge.ResetEdge();
+            }
+            else if (leftCell.GetItem() is CellItem leftItemm && leftItemm.IsFilled)
+            {
+                AddDirections(new Directions(false, false, false,true));
             }
         }
     }
@@ -444,4 +459,12 @@ public class Directions
     public bool Left;
 
     public bool HasOnlyOneSide;
+
+    public Directions(bool up, bool down, bool right, bool left)
+    {
+        Up = up;
+        Down = down;
+        Right = right;
+        Left = left;
+    }
 }
