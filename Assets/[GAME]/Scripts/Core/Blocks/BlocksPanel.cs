@@ -72,17 +72,9 @@ public class BlocksPanel : MonoBehaviour
     {
         List<BlockController> possibleRandomBlocks = new List<BlockController>();
         List<CellItem> unfilledCells;
-        // If we have totally empty items, get them 
-        if (_grid.GetTotallyEmptyItems().Count == 0)
-        {
-            unfilledCells = _grid.GetUnFilledItems();
-        }
-        else
-        {
-            unfilledCells = _grid.GetTotallyEmptyItems();
-        }
         
-
+        unfilledCells = _grid.GetUnFilledItems();
+        
         if (unfilledCells == null || unfilledCells.Count == 0)
         {
             foreach (var helper in _availableBlocks)
@@ -90,17 +82,22 @@ public class BlocksPanel : MonoBehaviour
                 possibleRandomBlocks.Add(helper.Controller);
             }
 
-            return possibleRandomBlocks; //  Return default 
+            return possibleRandomBlocks; // Return default
         }
 
-        for (int i = 0; i < 3; i++)
+        HashSet<CellItem> usedCells = new HashSet<CellItem>();
+        for (int i = 0; i < unfilledCells.Count; i++)
         {
             CellItem randomCell = unfilledCells[Random.Range(0, unfilledCells.Count)];
+            if (usedCells.Contains(randomCell))
+                continue; // Bu hücreyi zaten kullandıysak atla
+
             BlockHelper selectedBlock = GetRandomAvailableBlockByDirection(randomCell.CellDirections);
 
             if (selectedBlock != null)
             {
                 possibleRandomBlocks.Add(selectedBlock.Controller);
+                usedCells.Add(randomCell); // Seçilen bloğun hücresini işaretle
             }
         }
 
@@ -115,7 +112,6 @@ public class BlocksPanel : MonoBehaviour
                     ? (
                         (block.BlockDirections.Right && block.BlockDirections.Left)
                             ? (!directions.Right || !directions.Left)
-                            // ReSharper disable once SimplifyConditionalTernaryExpression
                             : (block.BlockDirections.Up && block.BlockDirections.Down)
                                 ? (!directions.Up || !directions.Down)
                                 : false
@@ -134,8 +130,8 @@ public class BlocksPanel : MonoBehaviour
             Debug.LogWarning("No valid blocks found");
             return null;
         }
-        
-        return validBlocks[Random.Range(0,validBlocks.Count)];
+
+        return validBlocks[Random.Range(0, validBlocks.Count)];
     }
 
 
