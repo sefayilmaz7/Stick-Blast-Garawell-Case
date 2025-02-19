@@ -1,5 +1,7 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using GarawellGames.Managers;
 using UnityEngine;
 using UnityEngine.Serialization;
 
@@ -10,7 +12,12 @@ public class CellItemEdge : MonoBehaviour
 
     public CellItem CellItem;
     public SpriteRenderer EdgeSprite;
-    
+
+    private void Awake()
+    {
+        edgeSelectedColor = ColorManager.Instance.LevelColor;
+    }
+
     public void Highlight()
     {
         EdgeSprite.color = edgeSelectedColor;
